@@ -1,3 +1,3 @@
 # docsonnet
 
-OCI image containing the [docsonnet](https://github.com/jsonnet-lib/docsonnet) Jsonnet library.
+OCI image containing the [docsonnet](https://github.com/jsonnet-libs/docsonnet) Jsonnet library.
