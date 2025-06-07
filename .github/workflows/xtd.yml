@@ -1,0 +1,22 @@
+name: xtd
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/publish-image.yml
+      - .github/workflows/xtd.yml
+      - jsonnet-libs/xtd/*
+  workflow_dispatch:
+jobs:
+  version:
+    strategy:
+      matrix:
+        version: ["latest"]
+    name: "${{ matrix.version }}"
+    uses: ./.github/workflows/publish-image.yml
+    with:
+      version: "${{ matrix.version }}"
+      organization: jsonnet-libs
+      repository: xtd
+    secrets: inherit

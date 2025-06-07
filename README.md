@@ -6,4 +6,5 @@ Jsonnet OCI Images (JOI) is a collection of OCI images that provide a Jsonnet bu
 
 - [Grafonnet](https://github.com/grafana/grafonnet): https://hub.docker.com/r/metio/joi-grafana-grafonnet
 - [Docsonnet](https://github.com/jsonnet-libs/docsonnet): https://hub.docker.com/r/metio/joi-jsonnet-libs-docsonnet
+- [xtd](https://github.com/jsonnet-libs/xtd): https://hub.docker.com/r/metio/joi-jsonnet-libs-xtd
 
