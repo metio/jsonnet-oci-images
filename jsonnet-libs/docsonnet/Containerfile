@@ -1,0 +1,12 @@
+FROM cgr.dev/chainguard/go:latest AS jb
+
+RUN go install -a github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb@latest
+
+WORKDIR /src
+
+RUN /root/go/bin/jb init && \
+    /root/go/bin/jb install github.com/jsonnet-libs/docsonnet
+
+FROM scratch
+
+COPY --from=jb /src/vendor/github.com/jsonnet-libs/docsonnet /github.com/jsonnet-libs/docsonnet

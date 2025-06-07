@@ -1,0 +1,14 @@
+ARG GRAFONNET_VERSION
+
+FROM cgr.dev/chainguard/go:latest AS jb
+
+RUN go install -a github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb@latest
+
+ARG GRAFONNET_VERSION
+WORKDIR /src
+RUN /root/go/bin/jb init && \
+    /root/go/bin/jb install github.com/grafana/grafonnet/gen/grafonnet-${GRAFONNET_VERSION}@main
+
+FROM scratch
+ARG GRAFONNET_VERSION
+COPY --from=jb /src/vendor/github.com/grafana/grafonnet/gen/grafonnet-${GRAFONNET_VERSION} /github.com/grafana/grafonnet/gen/grafonnet-${GRAFONNET_VERSION}
