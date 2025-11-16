@@ -9,6 +9,10 @@ WORKDIR /src
 RUN /root/go/bin/jb init && \
     /root/go/bin/jb install github.com/grafana/grafonnet/gen/grafonnet-${GRAFONNET_VERSION}@main
 
+RUN mkdir /src/vendor/grafonnet-latest && \
+    echo "import 'github.com/grafana/grafonnet/gen/grafonnet-${GRAFONNET_VERSION}/main.libsonnet'" > /src/vendor/grafonnet-latest/main.libsonnet
+
 FROM scratch
 ARG GRAFONNET_VERSION
 COPY --from=jb /src/vendor/github.com/grafana/grafonnet/gen/grafonnet-${GRAFONNET_VERSION} /github.com/grafana/grafonnet/gen/grafonnet-${GRAFONNET_VERSION}
+COPY --from=jb /src/vendor/grafonnet-latest /github.com/grafana/grafonnet/gen/grafonnet-latest

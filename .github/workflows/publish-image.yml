@@ -100,7 +100,6 @@ jobs:
             ${{ steps.image.outputs.name }}@${{ steps.publish.outputs.digest }}
       - id: documentation
         name: Docker Hub Description
-        if: ${{ inputs.version }} == "latest"
         uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ vars.DOCKER_USERNAME }}
