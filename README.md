@@ -27,6 +27,26 @@ local k = import 'github.com/jsonnet-libs/k8s-libsonnet/1.34/main.libsonnet';
 local g = import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet';
 ```
 
+## Image tags — `latest` vs a pinned snapshot
+
+There are two independent axes. The **library version** is chosen in the import
+path (above). The **image tag** chooses how the bundled vendor tree tracks
+upstream:
+
+- **`:latest`** (default) — the moving tag. It auto-updates whenever upstream
+  changes, so an `OCIRepository` on `:latest` re-pulls the newest content on its
+  interval. Best for "always current".
+- **`:<YYYY.M.D>`** — an immutable dated snapshot (metio calendar convention,
+  e.g. `:2026.6.16`). Each rebuild pushes one alongside `:latest`. A library is
+  only rebuilt when its upstream SHA changes, so **each dated tag marks a
+  distinct content version** — pin to one for reproducible renders that won't
+  drift. List the available dates with any registry tool, e.g.
+  `crane ls ghcr.io/metio/joi-grafana-grafonnet`.
+
+Both tags point at the same multi-arch index, so pinning costs nothing extra.
+For absolute immutability, pin by digest (`@sha256:…`), which `OCIRepository`
+also supports.
+
 ## Zero-maintenance pipeline
 
 There are no per-library files and no version numbers to maintain:

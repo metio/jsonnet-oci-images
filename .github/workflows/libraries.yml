@@ -27,6 +27,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set.outputs.matrix }}
       any: ${{ steps.set.outputs.any }}
+      date: ${{ steps.set.outputs.date }}
     steps:
       - uses: actions/checkout@v4
       - id: refresh
@@ -58,6 +59,10 @@ jobs:
           n=$(jq length changed.json)
           echo "any=$([ "$n" -gt 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
           echo "matrix=$(jq -c '{lib: .}' changed.json)" >> "$GITHUB_OUTPUT"
+          # Shared calver tag for everything (re)built in this run — the metio
+          # calendar convention. Pushed alongside :latest so users can pin an
+          # image to an immutable dated snapshot instead of the moving :latest.
+          echo "date=$(date +'%Y.%-m.%-d')" >> "$GITHUB_OUTPUT"
   build:
     name: ${{ matrix.lib.name }}
     needs: discover
@@ -103,7 +108,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - id: push
-        name: Build and push :latest
+        name: Build and push (:latest + dated calver tag)
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -117,7 +122,13 @@ jobs:
           # needs no QEMU and each per-arch manifest shares the same single
           # data layer.
           platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/ppc64le,linux/riscv64,linux/s390x
-          tags: ${{ env.IMAGE }}:latest
+          # :latest is the moving tag (auto-updates on every upstream change);
+          # the dated tag is an immutable snapshot users can pin to. A library is
+          # only (re)built when its upstream SHA changes, so each dated tag marks
+          # a distinct content version — between changes the content is identical.
+          tags: |
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ needs.discover.outputs.date }}
           build-args: |
             JB_PKGS=${{ env.JB_PKGS }}
             COPY_PATH=${{ env.COPY_PATH }}

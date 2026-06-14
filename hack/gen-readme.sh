@@ -18,9 +18,10 @@ SPDX-License-Identifier: 0BSD
 
 # Published images
 
-$(jq -r 'length' "$manifest") libraries, each at \`:latest\` (all upstream versions inside;
-pick one in the import path). Multi-version libraries also carry a synthesized
-\`latest\` alias.
+$(jq -r 'length' "$manifest") libraries. Pick the library version in the import path
+(all upstream versions are inside the image; multi-version libraries also carry a
+synthesized \`latest\` alias). Pin the image with \`:latest\` (moving) or an immutable
+dated tag \`:<YYYY.M.D>\` — each rebuild pushes both. See the README for details.
 
 | Library | Image | Upstream |
 |---|---|---|

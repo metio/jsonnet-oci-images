@@ -63,12 +63,19 @@ of exactly that library. This is what replaced Renovate — do not add it back.
   exactly once with **no QEMU**; only the empty `scratch` runtime stage takes
   `$TARGETPLATFORM`, which stamps each manifest's architecture. Each per-arch
   manifest is still exactly one layer.
-- **Version selection happens in the import path, not the tag.** The image tag
-  is always `:latest`. Multi-version libraries (k8s-libsonnet `1.32`…, grafonnet
-  `gen/grafonnet-vX`) ship **all** versions in one image plus a synthesized
-  `latest` alias dir whose `main.libsonnet` re-imports the newest version (the
-  "grafonnet trick", generalized). Consumers either pin a version in the import
-  path or import `latest`.
+- **Library-version selection happens in the import path, not the tag.**
+  Multi-version libraries (k8s-libsonnet `1.32`…, grafonnet `gen/grafonnet-vX`)
+  ship **all** versions in one image plus a synthesized `latest` alias dir whose
+  `main.libsonnet` re-imports the newest version (the "grafonnet trick",
+  generalized). Consumers pin a version in the import path or import `latest`.
+- **The image tag is a separate axis: `:latest` + a dated calver tag.** Every
+  (re)build pushes the moving `:latest` AND an immutable `:<YYYY.M.D>` snapshot
+  (the metio calendar convention; the date is computed once per run in the
+  `discover` job and shared across the matrix). Since a library is only rebuilt
+  when its upstream SHA changes, each dated tag marks a distinct content version
+  — between changes the content is byte-identical. Both tags point at the same
+  multi-arch index. Users pin `:latest` for auto-update, a dated tag for
+  reproducibility, or a digest for absolute immutability.
 
 ## Build args (passed by the workflow per library)
 
