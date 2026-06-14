@@ -29,7 +29,7 @@ jobs:
       any: ${{ steps.set.outputs.any }}
       date: ${{ steps.set.outputs.date }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: refresh
         name: Refresh manifest + compute changed libraries
         env:
@@ -73,7 +73,7 @@ jobs:
       max-parallel: 12
       matrix: ${{ fromJSON(needs.discover.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: args
         name: Compute build args (enumerate versions at the pinned SHA)
         env:
