@@ -110,11 +110,13 @@ jobs:
           file: ./Containerfile
           push: true
           # The content is arch-independent Jsonnet text; a multi-arch index lets
-          # arm64-only clusters (Graviton, Apple-silicon kind/k3s) pull the image
-          # as an image volume or OCIRepository source. The builder stage is
-          # pinned to $BUILDPLATFORM, so this needs no QEMU and each per-arch
-          # manifest shares the same single data layer.
-          platforms: linux/amd64,linux/arm64
+          # any node arch pull the image as an image volume or OCIRepository
+          # source. This is the same arch set every metio image ships, so the
+          # jaas operator and the JOI libraries it consumes are co-schedulable
+          # everywhere. The builder stage is pinned to $BUILDPLATFORM, so this
+          # needs no QEMU and each per-arch manifest shares the same single
+          # data layer.
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/ppc64le,linux/riscv64,linux/s390x
           tags: ${{ env.IMAGE }}:latest
           build-args: |
             JB_PKGS=${{ env.JB_PKGS }}
