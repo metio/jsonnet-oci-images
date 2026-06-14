@@ -1,0 +1,129 @@
+# SPDX-FileCopyrightText: The jsonnet-oci-images Authors
+# SPDX-License-Identifier: 0BSD
+
+# Builds every Jsonnet-OCI-Image from the generic Containerfile, driven entirely
+# by libraries.json. No per-library file, no hardcoded version, no Renovate:
+# discover.sh records each upstream library's current HEAD SHA, so a new commit
+# upstream changes the manifest and ONLY the changed images rebuild;
+# build-args.sh enumerates versions at that SHA. Zero manual upkeep.
+name: Build Libraries
+on:
+  schedule:
+    - cron: "27 5 * * *" # daily: catch upstream commits + new libraries
+  workflow_dispatch:
+    inputs:
+      all:
+        description: Rebuild every library, not just the changed ones
+        type: boolean
+        default: false
+permissions:
+  contents: write # commit the refreshed manifest
+  packages: write # push images to ghcr.io
+  id-token: write # cosign keyless signing
+jobs:
+  discover:
+    name: Discover libraries
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set.outputs.matrix }}
+      any: ${{ steps.set.outputs.any }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: refresh
+        name: Refresh manifest + compute changed libraries
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FORCE_ALL: ${{ github.event.inputs.all }}
+        run: |
+          [ -f libraries.json ] || echo '[]' > libraries.json
+          hack/discover.sh > new.json
+          # entries whose SHA changed or that are new (or everything, on force/first run)
+          if [ "$FORCE_ALL" = "true" ]; then
+            cp new.json changed.json
+          else
+            jq -c --slurpfile old libraries.json \
+              '(reduce ($old[0][]?) as $e ({}; .[$e.name]=$e.sha)) as $o
+               | [ .[] | select(.sha != ($o[.name] // "")) ]' new.json > changed.json
+          fi
+          if ! diff -q libraries.json new.json >/dev/null 2>&1; then
+            mv new.json libraries.json
+            hack/gen-readme.sh libraries.json > LIBRARIES.md
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add libraries.json LIBRARIES.md && git commit -m 'chore: refresh JOI library manifest' && git push
+          fi
+      - id: set
+        name: Emit build matrix (changed libraries only)
+        run: |
+          n=$(jq length changed.json)
+          echo "any=$([ "$n" -gt 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "matrix=$(jq -c '{lib: .}' changed.json)" >> "$GITHUB_OUTPUT"
+  build:
+    name: ${{ matrix.lib.name }}
+    needs: discover
+    if: needs.discover.outputs.any == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix: ${{ fromJSON(needs.discover.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: args
+        name: Compute build args (enumerate versions at the pinned SHA)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo '${{ toJSON(matrix.lib) }}' | hack/build-args.sh >> "$GITHUB_ENV"
+      - uses: docker/setup-buildx-action@v3
+      - id: verify
+        name: Build locally and assert a single layer
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Containerfile
+          load: true
+          push: false
+          provenance: false
+          sbom: false
+          tags: joi-verify:latest
+          build-args: |
+            JB_PKGS=${{ env.JB_PKGS }}
+            COPY_PATH=${{ env.COPY_PATH }}
+            LATEST_DIR=${{ env.LATEST_DIR }}
+            LATEST_TARGET=${{ env.LATEST_TARGET }}
+            JB_REF=${{ env.JB_REF }}
+      - name: Assert exactly one layer
+        run: |
+          n=$(docker image inspect joi-verify:latest --format '{{ len .RootFS.Layers }}')
+          [ "$n" = "1" ] || { echo "::error::${{ matrix.lib.name }} has $n layers, expected 1"; exit 1; }
+      - uses: sigstore/cosign-installer@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: push
+        name: Build and push :latest
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Containerfile
+          push: true
+          # The content is arch-independent Jsonnet text; a multi-arch index lets
+          # arm64-only clusters (Graviton, Apple-silicon kind/k3s) pull the image
+          # as an image volume or OCIRepository source. The builder stage is
+          # pinned to $BUILDPLATFORM, so this needs no QEMU and each per-arch
+          # manifest shares the same single data layer.
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ env.IMAGE }}:latest
+          build-args: |
+            JB_PKGS=${{ env.JB_PKGS }}
+            COPY_PATH=${{ env.COPY_PATH }}
+            LATEST_DIR=${{ env.LATEST_DIR }}
+            LATEST_TARGET=${{ env.LATEST_TARGET }}
+            JB_REF=${{ env.JB_REF }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.revision=${{ matrix.lib.sha }}
+      - name: Sign
+        run: cosign sign --yes "${{ env.IMAGE }}@${{ steps.push.outputs.digest }}"

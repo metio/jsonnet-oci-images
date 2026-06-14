@@ -1,10 +1,46 @@
+<!--
+SPDX-FileCopyrightText: The jsonnet-oci-images Authors
+SPDX-License-Identifier: 0BSD
+-->
+
 # Jsonnet OCI Images (JOI)
 
-Jsonnet OCI Images (JOI) is a collection of OCI images that provide a Jsonnet bundles as OCI images. Its main use case is to allow users to run Jsonnet code using [jaas](https://github.com/metio/jaas) on Kubernetes.
+JOI packages Jsonnet libraries as OCI images so they can be consumed by
+[jaas](https://github.com/metio/jaas) on Kubernetes — either mounted as image
+volumes (standalone renderer) or pulled as Flux `OCIRepository` sources (operator
+mode, via the [`joi` Helm chart](https://github.com/metio/helm-charts/tree/main/charts/joi)).
+Each image is a **single filesystem layer** laid out exactly like a
+`jb`/jsonnet-bundler `vendor/` tree, so the same import statement works locally
+(`jsonnet -J vendor`) and in-cluster.
 
-## Available Images
+## Coverage
 
-- [Grafonnet](https://github.com/grafana/grafonnet): https://hub.docker.com/r/metio/joi-grafana-grafonnet
-- [Docsonnet](https://github.com/jsonnet-libs/docsonnet): https://hub.docker.com/r/metio/joi-jsonnet-libs-docsonnet
-- [xtd](https://github.com/jsonnet-libs/xtd): https://hub.docker.com/r/metio/joi-jsonnet-libs-xtd
+Every consumable library in the [jsonnet-libs](https://github.com/jsonnet-libs)
+org plus [grafonnet](https://github.com/grafana/grafonnet) is published to
+`ghcr.io/metio/joi-<org>-<repo>`. The full, auto-generated list is in
+[`LIBRARIES.md`](LIBRARIES.md). Multi-version libraries (k8s-libsonnet,
+cert-manager-libsonnet, grafonnet, …) ship **all upstream versions in one image**
+plus a synthesized `latest` alias — pick one in the import path:
 
+```jsonnet
+local k = import 'github.com/jsonnet-libs/k8s-libsonnet/1.34/main.libsonnet';
+local g = import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet';
+```
+
+## Zero-maintenance pipeline
+
+There are no per-library files and no version numbers to maintain:
+
+- **`Containerfile`** — one generic, parameterized builder for every library.
+- **`hack/discover.sh`** — lists the jsonnet-libs org, filters to real libraries
+  (a repo must ship a `main.libsonnet`), classifies single- vs multi-version,
+  and records each library's current upstream **HEAD SHA** in `libraries.json`.
+- **`hack/build-args.sh`** — enumerates a library's versions *at the pinned SHA*,
+  so a newly published upstream version needs no edit.
+- **`.github/workflows/libraries.yml`** — runs daily: refreshes the manifest and
+  **rebuilds only the libraries whose upstream SHA changed** (or all, on demand).
+  Each build is verified to be a single layer before it is pushed and signed.
+
+A new upstream commit moves the SHA → the manifest changes → that one image
+rebuilds. A brand-new jsonnet-libs repo is discovered automatically. No tags, no
+manual version bumps, no Renovate.
