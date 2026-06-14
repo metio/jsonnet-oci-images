@@ -82,7 +82,7 @@ jobs:
       - uses: docker/setup-buildx-action@v3
       - id: verify
         name: Build locally and assert a single layer
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./Containerfile
@@ -109,7 +109,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - id: push
         name: Build and push (:latest + dated calver tag)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./Containerfile
