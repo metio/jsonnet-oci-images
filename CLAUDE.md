@@ -29,7 +29,10 @@ The images are **dual-consumable**, which drives the two hard invariants below:
 
 There is **one generic `Containerfile`** for every library and **no per-library
 files, no hardcoded versions, no git tags/SHAs to bump by hand**, and **no
-Renovate**. The pipeline:
+Renovate for library versions** (the org-wide `metio/renovate-config` preset
+that `renovate.json` extends still manages this repo's *infrastructure* deps —
+GitHub Actions, the builder base image — but never the library content). The
+pipeline:
 
 - `hack/discover.sh` — lists the [jsonnet-libs](https://github.com/jsonnet-libs)
   org (+ grafonnet), filters out anything that isn't a real library (needs a
@@ -47,7 +50,10 @@ Renovate**. The pipeline:
 
 **The SHA in the manifest IS the change detector.** When upstream pushes a
 commit, `discover.sh` records the new SHA, the manifest diff triggers a rebuild
-of exactly that library. This is what replaced Renovate — do not add it back.
+of exactly that library. This is what replaced Renovate **for tracking library
+versions** — do not re-introduce a Renovate manager that pins library tags/SHAs.
+(The org-preset Renovate managing GitHub Actions / the base image is fine and
+unrelated.)
 
 ## Invariants — do not break
 

@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: The jsonnet-oci-images Authors
+# SPDX-License-Identifier: 0BSD
+
+version = 1
+
+# renovate.json is JSON (no comment syntax) and follows Renovate's fixed schema;
+# it extends the org-wide preset at github.com/metio/renovate-config.
+[[annotations]]
+path = "renovate.json"
+precedence = "override"
+SPDX-FileCopyrightText = "The jsonnet-oci-images Authors"
+SPDX-License-Identifier = "0BSD"
+
+# libraries.json is the discovery manifest, regenerated and committed by
+# .github/workflows/libraries.yml; JSON carries no inline header.
+[[annotations]]
+path = "libraries.json"
+precedence = "override"
+SPDX-FileCopyrightText = "The jsonnet-oci-images Authors"
+SPDX-License-Identifier = "0BSD"

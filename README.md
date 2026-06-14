@@ -63,4 +63,9 @@ There are no per-library files and no version numbers to maintain:
 
 A new upstream commit moves the SHA → the manifest changes → that one image
 rebuilds. A brand-new jsonnet-libs repo is discovered automatically. No tags, no
-manual version bumps, no Renovate.
+manual version bumps, and **no Renovate for library versions** — the SHA-based
+detection makes it unnecessary. (Renovate, via the org-wide
+[`metio/renovate-config`](https://github.com/metio/renovate-config) preset this
+repo's `renovate.json` extends, still keeps the repo's own infrastructure fresh:
+GitHub Actions and the `Containerfile` builder base. It has no say over the
+library content.)
