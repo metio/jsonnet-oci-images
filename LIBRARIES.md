@@ -6,9 +6,10 @@ SPDX-License-Identifier: 0BSD
 
 # Published images
 
-101 libraries, each at `:latest` (all upstream versions inside;
-pick one in the import path). Multi-version libraries also carry a synthesized
-`latest` alias.
+92 libraries. Pick the library version in the import path
+(all upstream versions are inside the image; multi-version libraries also carry a
+synthesized `latest` alias). Pin the image with `:latest` (moving) or an immutable
+dated tag `:<YYYY.M.D>` — each rebuild pushes both. See the README for details.
 
 | Library | Image | Upstream |
 |---|---|---|
@@ -16,14 +17,13 @@ pick one in the import path). Multi-version libraries also carry a synthesized
 | aiven-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-aiven-libsonnet` | [jsonnet-libs/aiven-libsonnet](https://github.com/jsonnet-libs/aiven-libsonnet) |
 | amazon-vpc-resource-controller-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-amazon-vpc-resource-controller-libsonnet` | [jsonnet-libs/amazon-vpc-resource-controller-libsonnet](https://github.com/jsonnet-libs/amazon-vpc-resource-controller-libsonnet) |
 | argo-cd-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-argo-cd-libsonnet` | [jsonnet-libs/argo-cd-libsonnet](https://github.com/jsonnet-libs/argo-cd-libsonnet) |
-| argocd-operator-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-argocd-operator-libsonnet` | [jsonnet-libs/argocd-operator-libsonnet](https://github.com/jsonnet-libs/argocd-operator-libsonnet) |
 | argo-rollouts-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-argo-rollouts-libsonnet` | [jsonnet-libs/argo-rollouts-libsonnet](https://github.com/jsonnet-libs/argo-rollouts-libsonnet) |
-| argo-workflows-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-argo-workflows-libsonnet` | [jsonnet-libs/argo-workflows-libsonnet](https://github.com/jsonnet-libs/argo-workflows-libsonnet) |
+| argocd-operator-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-argocd-operator-libsonnet` | [jsonnet-libs/argocd-operator-libsonnet](https://github.com/jsonnet-libs/argocd-operator-libsonnet) |
 | aws-load-balancer-controller-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-aws-load-balancer-controller-libsonnet` | [jsonnet-libs/aws-load-balancer-controller-libsonnet](https://github.com/jsonnet-libs/aws-load-balancer-controller-libsonnet) |
 | aws-rds-controller-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-aws-rds-controller-libsonnet` | [jsonnet-libs/aws-rds-controller-libsonnet](https://github.com/jsonnet-libs/aws-rds-controller-libsonnet) |
 | azure-load-balancer-controller-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-azure-load-balancer-controller-libsonnet` | [jsonnet-libs/azure-load-balancer-controller-libsonnet](https://github.com/jsonnet-libs/azure-load-balancer-controller-libsonnet) |
-| banzaicloud-bank-vaults-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-banzaicloud-bank-vaults-libsonnet` | [jsonnet-libs/banzaicloud-bank-vaults-libsonnet](https://github.com/jsonnet-libs/banzaicloud-bank-vaults-libsonnet) |
 | banzai-logging-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-banzai-logging-libsonnet` | [jsonnet-libs/banzai-logging-libsonnet](https://github.com/jsonnet-libs/banzai-logging-libsonnet) |
+| banzaicloud-bank-vaults-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-banzaicloud-bank-vaults-libsonnet` | [jsonnet-libs/banzaicloud-bank-vaults-libsonnet](https://github.com/jsonnet-libs/banzaicloud-bank-vaults-libsonnet) |
 | calico-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-calico-libsonnet` | [jsonnet-libs/calico-libsonnet](https://github.com/jsonnet-libs/calico-libsonnet) |
 | cert-manager-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cert-manager-libsonnet` | [jsonnet-libs/cert-manager-libsonnet](https://github.com/jsonnet-libs/cert-manager-libsonnet) |
 | cilium-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cilium-libsonnet` | [jsonnet-libs/cilium-libsonnet](https://github.com/jsonnet-libs/cilium-libsonnet) |
@@ -34,17 +34,11 @@ pick one in the import path). Multi-version libraries also carry a synthesized
 | cluster-api-operator-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cluster-api-operator-libsonnet` | [jsonnet-libs/cluster-api-operator-libsonnet](https://github.com/jsonnet-libs/cluster-api-operator-libsonnet) |
 | cluster-api-provider-aws-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cluster-api-provider-aws-libsonnet` | [jsonnet-libs/cluster-api-provider-aws-libsonnet](https://github.com/jsonnet-libs/cluster-api-provider-aws-libsonnet) |
 | cluster-api-provider-tinkerbell-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cluster-api-provider-tinkerbell-libsonnet` | [jsonnet-libs/cluster-api-provider-tinkerbell-libsonnet](https://github.com/jsonnet-libs/cluster-api-provider-tinkerbell-libsonnet) |
-| cnrm-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cnrm-libsonnet` | [jsonnet-libs/cnrm-libsonnet](https://github.com/jsonnet-libs/cnrm-libsonnet) |
 | composable-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-composable-libsonnet` | [jsonnet-libs/composable-libsonnet](https://github.com/jsonnet-libs/composable-libsonnet) |
 | consul-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-consul-libsonnet` | [jsonnet-libs/consul-libsonnet](https://github.com/jsonnet-libs/consul-libsonnet) |
 | contour-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-contour-libsonnet` | [jsonnet-libs/contour-libsonnet](https://github.com/jsonnet-libs/contour-libsonnet) |
 | crossplane-core-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-crossplane-core-libsonnet` | [jsonnet-libs/crossplane-core-libsonnet](https://github.com/jsonnet-libs/crossplane-core-libsonnet) |
-| crossplane-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-crossplane-libsonnet` | [jsonnet-libs/crossplane-libsonnet](https://github.com/jsonnet-libs/crossplane-libsonnet) |
-| crossplane-provider-grafana-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-crossplane-provider-grafana-libsonnet` | [jsonnet-libs/crossplane-provider-grafana-libsonnet](https://github.com/jsonnet-libs/crossplane-provider-grafana-libsonnet) |
-| crossplane-provider-upjet-aws-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-crossplane-provider-upjet-aws-libsonnet` | [jsonnet-libs/crossplane-provider-upjet-aws-libsonnet](https://github.com/jsonnet-libs/crossplane-provider-upjet-aws-libsonnet) |
 | crossplane-provider-upjet-azuread-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-crossplane-provider-upjet-azuread-libsonnet` | [jsonnet-libs/crossplane-provider-upjet-azuread-libsonnet](https://github.com/jsonnet-libs/crossplane-provider-upjet-azuread-libsonnet) |
-| crossplane-provider-upjet-azure-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-crossplane-provider-upjet-azure-libsonnet` | [jsonnet-libs/crossplane-provider-upjet-azure-libsonnet](https://github.com/jsonnet-libs/crossplane-provider-upjet-azure-libsonnet) |
-| crossplane-provider-upjet-gcp-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-crossplane-provider-upjet-gcp-libsonnet` | [jsonnet-libs/crossplane-provider-upjet-gcp-libsonnet](https://github.com/jsonnet-libs/crossplane-provider-upjet-gcp-libsonnet) |
 | crossplane-provider-upjet-github-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-crossplane-provider-upjet-github-libsonnet` | [jsonnet-libs/crossplane-provider-upjet-github-libsonnet](https://github.com/jsonnet-libs/crossplane-provider-upjet-github-libsonnet) |
 | dapr-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-dapr-libsonnet` | [jsonnet-libs/dapr-libsonnet](https://github.com/jsonnet-libs/dapr-libsonnet) |
 | datadog-operator-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-datadog-operator-libsonnet` | [jsonnet-libs/datadog-operator-libsonnet](https://github.com/jsonnet-libs/datadog-operator-libsonnet) |
@@ -68,7 +62,6 @@ pick one in the import path). Multi-version libraries also carry a synthesized
 | harbor-operator-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-harbor-operator-libsonnet` | [jsonnet-libs/harbor-operator-libsonnet](https://github.com/jsonnet-libs/harbor-operator-libsonnet) |
 | hcp-terraform-operator-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-hcp-terraform-operator-libsonnet` | [jsonnet-libs/hcp-terraform-operator-libsonnet](https://github.com/jsonnet-libs/hcp-terraform-operator-libsonnet) |
 | istio-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-istio-libsonnet` | [jsonnet-libs/istio-libsonnet](https://github.com/jsonnet-libs/istio-libsonnet) |
-| k8s-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-k8s-libsonnet` | [jsonnet-libs/k8s-libsonnet](https://github.com/jsonnet-libs/k8s-libsonnet) |
 | kargo-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-kargo-libsonnet` | [jsonnet-libs/kargo-libsonnet](https://github.com/jsonnet-libs/kargo-libsonnet) |
 | karpenter-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-karpenter-libsonnet` | [jsonnet-libs/karpenter-libsonnet](https://github.com/jsonnet-libs/karpenter-libsonnet) |
 | keda-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-keda-libsonnet` | [jsonnet-libs/keda-libsonnet](https://github.com/jsonnet-libs/keda-libsonnet) |
@@ -90,7 +83,6 @@ pick one in the import path). Multi-version libraries also carry a synthesized
 | mysql-operator-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-mysql-operator-libsonnet` | [jsonnet-libs/mysql-operator-libsonnet](https://github.com/jsonnet-libs/mysql-operator-libsonnet) |
 | nats-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-nats-libsonnet` | [jsonnet-libs/nats-libsonnet](https://github.com/jsonnet-libs/nats-libsonnet) |
 | node-feature-discovery-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-node-feature-discovery-libsonnet` | [jsonnet-libs/node-feature-discovery-libsonnet](https://github.com/jsonnet-libs/node-feature-discovery-libsonnet) |
-| openshift-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-openshift-libsonnet` | [jsonnet-libs/openshift-libsonnet](https://github.com/jsonnet-libs/openshift-libsonnet) |
 | prometheus-operator-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-prometheus-operator-libsonnet` | [jsonnet-libs/prometheus-operator-libsonnet](https://github.com/jsonnet-libs/prometheus-operator-libsonnet) |
 | pyrra-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-pyrra-libsonnet` | [jsonnet-libs/pyrra-libsonnet](https://github.com/jsonnet-libs/pyrra-libsonnet) |
 | rabbitmq-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-rabbitmq-libsonnet` | [jsonnet-libs/rabbitmq-libsonnet](https://github.com/jsonnet-libs/rabbitmq-libsonnet) |
