@@ -29,7 +29,7 @@ ARG JB_REF=""
 # build platform ($BUILDPLATFORM). A multi-arch push then runs jb exactly once
 # (no QEMU emulation per target arch); only the empty scratch runtime stage below
 # takes $TARGETPLATFORM, which is what stamps each manifest's architecture.
-FROM --platform=$BUILDPLATFORM cgr.dev/chainguard/go:latest AS jb
+FROM --platform=$BUILDPLATFORM cgr.dev/chainguard/go:latest@sha256:3cea88773e65f24c4db570d96b97a65fb8f3c145f656a4396e23d9be6f34cddd AS jb
 RUN go install -a github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb@latest
 
 ARG JB_PKGS
