@@ -16,9 +16,11 @@
 #   LATEST_TARGET  what that alias imports, e.g.
 #                "github.com/jsonnet-libs/k8s-libsonnet/1.35/main.libsonnet"
 #   JB_REF       optional commit SHA (or ref) to pin every install to. Empty
-#                tracks the upstream default branch; Renovate's git-refs
-#                datasource fills this with the upstream HEAD so a new upstream
-#                commit produces a new, reproducible build.
+#                tracks the upstream default branch; the discovery workflow
+#                records each upstream's current HEAD SHA in libraries.json and
+#                threads it through here, so a new upstream commit produces a
+#                new, reproducible build (there is no Renovate for library
+#                versions — discovery is the source of truth).
 ARG JB_PKGS
 ARG COPY_PATH
 ARG LATEST_DIR=""
