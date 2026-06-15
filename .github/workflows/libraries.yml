@@ -37,6 +37,9 @@ jobs:
           FORCE_ALL: ${{ github.event.inputs.all }}
         run: |
           [ -f libraries.json ] || echo '[]' > libraries.json
+          # discover.sh reads the committed manifest and is additive-only — the
+          # output is always a superset, so a transient discovery failure can
+          # never drop a published library here.
           hack/discover.sh > new.json
           # entries whose SHA changed or that are new (or everything, on force/first run)
           if [ "$FORCE_ALL" = "true" ]; then

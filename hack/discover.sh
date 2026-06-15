@@ -15,8 +15,15 @@
 # chart can auto-enable a library's dependencies.
 set -euo pipefail
 
-api() { curl -fsSL -H "Authorization: Bearer ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" "https://api.github.com/$1"; }
-raw() { curl -fsSL "https://raw.githubusercontent.com/$1"; } # not API-rate-limited
+# --retry-all-errors so a transient 5xx / 429 / connection blip is retried
+# rather than swallowed. Without it a single failed fetch drops a library from
+# the regenerated manifest — the per-repo tree fetch below falls through to
+# `|| continue`, silently removing a still-published image from the build set.
+# A genuinely-gone repo (persistent 404) still fails after the retries and is
+# dropped as intended; only flaky failures are absorbed.
+RETRY=(--retry 5 --retry-all-errors --retry-delay 2)
+api() { curl -fsSL "${RETRY[@]}" -H "Authorization: Bearer ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" "https://api.github.com/$1"; }
+raw() { curl -fsSL "${RETRY[@]}" "https://raw.githubusercontent.com/$1"; } # not API-rate-limited
 
 SKIP="k8s ecosystem playground jsonnet-training-course"
 repos_json="$(for p in 1 2 3 4; do api "orgs/jsonnet-libs/repos?per_page=100&page=$p"; done | jq -s 'add | map(select(.archived==false and .fork==false))')"
@@ -69,14 +76,30 @@ gbranch="$(api repos/grafana/grafonnet | jq -r '.default_branch')"
 gtree="$(api "repos/grafana/grafonnet/git/trees/${gbranch}?recursive=1" | jq -r '.tree[]?.path')"
 add grafonnet grafana grafonnet "$gbranch" grafonnet-gen "$gtree"
 
+# Never drop a library. An archived or transiently-unreachable upstream stops
+# producing new SHAs, but its last-built image stays pullable, so the library is
+# still consumable — keep it in the manifest. Fresh discovery wins per name
+# (updated SHA/closure); any library in the committed manifest this run did not
+# rediscover is preserved verbatim. The output is therefore always a superset of
+# OLD_MANIFEST, so a transient discovery failure can never silently remove a
+# published library (and the joi chart's sync, which mirrors this, can't either).
+# To retire a library for good, delete its entry from libraries.json by hand:
+# discovery won't resurrect it, since it's neither freshly found nor in the file.
+OLD_MANIFEST="${OLD_MANIFEST:-libraries.json}"
+old_json='[]'
+[ -f "$OLD_MANIFEST" ] && old_json="$(cat "$OLD_MANIFEST")"
+
 # Resolve each library's transitive closure over directdeps, keep only deps that
-# are themselves discovered JOI libraries, drop the raw directdeps.
-printf '%s\n' "${emit[@]}" | jq -s '
+# are themselves discovered JOI libraries, drop the raw directdeps, then union in
+# any preserved old-only entries (already in final shape, no directdeps).
+printf '%s\n' "${emit[@]}" | jq -s --argjson old "$old_json" '
   (map({key:.name, value:(.directdeps // [])}) | from_entries) as $g
   | def closure($n):
       def grow($a): ([$a[] | $g[.] // []] | add) as $m | ($a + $m | unique) as $x
         | if $x == $a then $a else grow($x) end;
       (grow([$n]) - [$n]);
-    map(. + {closure: ([closure(.name)[] | select($g[.] != null)] | sort)} | del(.directdeps))
+    (map(. + {closure: ([closure(.name)[] | select($g[.] != null)] | sort)} | del(.directdeps))) as $fresh
+  | ($fresh | map(.name)) as $names
+  | $fresh + [ $old[] | select(.name as $n | $names | index($n) | not) ]
   | sort_by(.name)
 '
