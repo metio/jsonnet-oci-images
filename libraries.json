@@ -380,6 +380,16 @@
     "closure": []
   },
   {
+    "name": "fluxcd-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "fluxcd-libsonnet",
+    "source": "https://github.com/jsonnet-libs/fluxcd-libsonnet",
+    "branch": "main",
+    "sha": "62f6736add6b70b45e3e3f78feceea41bcb6022d",
+    "kind": "multi",
+    "closure": []
+  },
+  {
     "name": "gatekeeper-libsonnet",
     "org": "jsonnet-libs",
     "repo": "gatekeeper-libsonnet",

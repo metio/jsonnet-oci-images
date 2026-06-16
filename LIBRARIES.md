@@ -6,7 +6,7 @@ SPDX-License-Identifier: 0BSD
 
 # Published images
 
-91 libraries. Pick the library version in the import path
+92 libraries. Pick the library version in the import path
 (all upstream versions are inside the image; multi-version libraries also carry a
 synthesized `latest` alias). Pin the image with `:latest` (moving) or an immutable
 dated tag `:<YYYY.M.D>` — each rebuild pushes both. See the README for details.
@@ -51,6 +51,7 @@ dated tag `:<YYYY.M.D>` — each rebuild pushes both. See the README for details
 | external-dns-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-external-dns-libsonnet` | [jsonnet-libs/external-dns-libsonnet](https://github.com/jsonnet-libs/external-dns-libsonnet) |
 | external-secrets-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-external-secrets-libsonnet` | [jsonnet-libs/external-secrets-libsonnet](https://github.com/jsonnet-libs/external-secrets-libsonnet) |
 | flagger-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-flagger-libsonnet` | [jsonnet-libs/flagger-libsonnet](https://github.com/jsonnet-libs/flagger-libsonnet) |
+| fluxcd-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-fluxcd-libsonnet` | [jsonnet-libs/fluxcd-libsonnet](https://github.com/jsonnet-libs/fluxcd-libsonnet) |
 | gatekeeper-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-gatekeeper-libsonnet` | [jsonnet-libs/gatekeeper-libsonnet](https://github.com/jsonnet-libs/gatekeeper-libsonnet) |
 | gateway-api-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-gateway-api-libsonnet` | [jsonnet-libs/gateway-api-libsonnet](https://github.com/jsonnet-libs/gateway-api-libsonnet) |
 | google-cloud-sql-proxy-operator-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-google-cloud-sql-proxy-operator-libsonnet` | [jsonnet-libs/google-cloud-sql-proxy-operator-libsonnet](https://github.com/jsonnet-libs/google-cloud-sql-proxy-operator-libsonnet) |
