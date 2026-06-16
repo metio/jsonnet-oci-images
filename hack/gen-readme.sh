@@ -23,9 +23,9 @@ $(jq -r 'length' "$manifest") libraries. Pick the library version in the import 
 synthesized \`latest\` alias). Pin the image with \`:latest\` (moving) or an immutable
 dated tag \`:<YYYY.M.D>\` — each rebuild pushes both. See the README for details.
 
-| Library | Image | Upstream |
-|---|---|---|
+| Library | Image | Upstream | Description |
+|---|---|---|---|
 EOF
 jq -r --arg reg "$registry" \
-  '.[] | "| \(.name) | `\($reg)/joi-\(.org)-\(.repo)` | [\(.org)/\(.repo)](\(.source)) |"' \
+  '.[] | "| \(.name) | `\($reg)/joi-\(.org)-\(.repo)` | [\(.org)/\(.repo)](\(.source)) | \((.description // "") | gsub("\\|";"\\|") | gsub("[\n\r]+";" ")) |"' \
   "$manifest" | sort

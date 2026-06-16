@@ -29,6 +29,13 @@ SKIP="k8s ecosystem playground jsonnet-training-course"
 repos_json="$(for p in 1 2 3 4; do api "orgs/jsonnet-libs/repos?per_page=100&page=$p"; done | jq -s 'add | map(select(.archived==false and .fork==false))')"
 emit=()
 
+# name -> upstream GitHub description, captured once so the spaces/punctuation in
+# descriptions never have to flow through the tab-separated read loop below. The
+# final assembly jq merges this onto each freshly-discovered entry by name.
+descmap="$(echo "$repos_json" | jq 'map({key:.name, value:(.description // "")}) | from_entries')"
+gdesc="$(api repos/grafana/grafonnet | jq -r '.description // ""')"
+descmap="$(echo "$descmap" | jq --arg d "$gdesc" '. + {grafonnet:$d}')"
+
 classify() { # paths  ->  kind|skip
   local paths="$1"
   if echo "$paths" | grep -qE '^[^/]+/main\.libsonnet$' \
@@ -92,13 +99,14 @@ old_json='[]'
 # Resolve each library's transitive closure over directdeps, keep only deps that
 # are themselves discovered JOI libraries, drop the raw directdeps, then union in
 # any preserved old-only entries (already in final shape, no directdeps).
-printf '%s\n' "${emit[@]}" | jq -s --argjson old "$old_json" '
+printf '%s\n' "${emit[@]}" | jq -s --argjson old "$old_json" --argjson desc "$descmap" '
   (map({key:.name, value:(.directdeps // [])}) | from_entries) as $g
   | def closure($n):
       def grow($a): ([$a[] | $g[.] // []] | add) as $m | ($a + $m | unique) as $x
         | if $x == $a then $a else grow($x) end;
       (grow([$n]) - [$n]);
-    (map(. + {closure: ([closure(.name)[] | select($g[.] != null)] | sort)} | del(.directdeps))) as $fresh
+    (map(. + {closure: ([closure(.name)[] | select($g[.] != null)] | sort),
+              description: ($desc[.name] // .description // "")} | del(.directdeps))) as $fresh
   | ($fresh | map(.name)) as $names
   | $fresh + [ $old[] | select(.name as $n | $names | index($n) | not) ]
   | sort_by(.name)

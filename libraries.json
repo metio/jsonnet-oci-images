@@ -7,7 +7,8 @@
     "branch": "main",
     "sha": "0cf6b53402d906cda8882fd4eb9d52d804e6043d",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "actions-runner-controller jsonnet library"
   },
   {
     "name": "aiven-libsonnet",
@@ -17,7 +18,8 @@
     "branch": "main",
     "sha": "55109fe54b2ab08c746ef5519789e29a18341100",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "aiven jsonnet library"
   },
   {
     "name": "amazon-vpc-resource-controller-libsonnet",
@@ -27,7 +29,8 @@
     "branch": "main",
     "sha": "d9786b079e7663b30f37b68ea0995e810b76f1a3",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "amazon-vpc-resource-controller jsonnet library"
   },
   {
     "name": "argo-cd-libsonnet",
@@ -37,7 +40,8 @@
     "branch": "main",
     "sha": "674323826e0f173a2f20ec6a094bb21a87f56ce6",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "argo-cd jsonnet library"
   },
   {
     "name": "argo-rollouts-libsonnet",
@@ -47,7 +51,8 @@
     "branch": "main",
     "sha": "507dd451efc6a417855a3df6a994580382560133",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "argo-rollouts jsonnet library"
   },
   {
     "name": "argocd-operator-libsonnet",
@@ -57,7 +62,8 @@
     "branch": "main",
     "sha": "8b31ee3db3313a75b758dc165c70b28bb0dba07b",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "argocd-operator jsonnet library"
   },
   {
     "name": "aws-load-balancer-controller-libsonnet",
@@ -67,7 +73,8 @@
     "branch": "main",
     "sha": "d2c248e49872385c362903926a0f56f78d4310a4",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "aws-load-balancer-controller jsonnet library"
   },
   {
     "name": "aws-rds-controller-libsonnet",
@@ -77,7 +84,8 @@
     "branch": "main",
     "sha": "5965f5246c211384b8e40eec4891974b8eff7fc0",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "aws-rds-controller jsonnet library"
   },
   {
     "name": "azure-load-balancer-controller-libsonnet",
@@ -87,7 +95,8 @@
     "branch": "main",
     "sha": "e6e999ed631489cf2f4e0319c8c1df6c28c2d9b3",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "azure-load-balancer-controller jsonnet library"
   },
   {
     "name": "banzai-logging-libsonnet",
@@ -97,7 +106,8 @@
     "branch": "main",
     "sha": "f89a1d7c5507be97bc4832224311a3d8914aaf48",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "banzai-logging jsonnet library"
   },
   {
     "name": "banzaicloud-bank-vaults-libsonnet",
@@ -107,7 +117,8 @@
     "branch": "main",
     "sha": "ba84695f2f8f62b5d752962d23386428b24e1157",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "banzaicloud-bank-vaults jsonnet library"
   },
   {
     "name": "calico-libsonnet",
@@ -117,7 +128,8 @@
     "branch": "main",
     "sha": "5175d8fa14273e96e6003b2c4caca7d3f5b2a874",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "calico jsonnet library"
   },
   {
     "name": "cert-manager-libsonnet",
@@ -127,7 +139,8 @@
     "branch": "main",
     "sha": "ae8dca53562a92f87ed183b9d4b02bff69b51c39",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "cert-manager jsonnet library"
   },
   {
     "name": "cilium-libsonnet",
@@ -137,7 +150,8 @@
     "branch": "main",
     "sha": "add73a2cf00dadee047fc5c6835c374cdcb8c1e1",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "cilium jsonnet library"
   },
   {
     "name": "clickhouse-operator-libsonnet",
@@ -147,7 +161,8 @@
     "branch": "main",
     "sha": "f18d585a4ef012fb564e54430f983190b5520076",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "clickhouse-operator jsonnet library"
   },
   {
     "name": "cloudnative-pg-barman-cloud-plugin-libsonnet",
@@ -157,7 +172,8 @@
     "branch": "main",
     "sha": "5b0a09d79ba3ee3b980303520a573fdcdfc95058",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "cloudnative-pg-barman-cloud-plugin jsonnet library"
   },
   {
     "name": "cloudnative-pg-libsonnet",
@@ -167,7 +183,8 @@
     "branch": "main",
     "sha": "c35ddf17f2ea3cd302bcec0bb941471e2ee2a743",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "cloudnative-pg jsonnet library"
   },
   {
     "name": "cluster-api-libsonnet",
@@ -177,7 +194,8 @@
     "branch": "main",
     "sha": "6ecd228d7fd802ff151dc569d7c4c8b5b70d4018",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "cluster-api jsonnet library"
   },
   {
     "name": "cluster-api-operator-libsonnet",
@@ -187,7 +205,8 @@
     "branch": "main",
     "sha": "a2dc60d583990c5c650d1ada3ffec67447c1cbe6",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "cluster-api-operator jsonnet library"
   },
   {
     "name": "cluster-api-provider-aws-libsonnet",
@@ -197,7 +216,8 @@
     "branch": "main",
     "sha": "3d3ed5de2eadf0b4490fa1df9025e863fcf46510",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "cluster-api-provider-aws jsonnet library"
   },
   {
     "name": "cluster-api-provider-tinkerbell-libsonnet",
@@ -207,7 +227,8 @@
     "branch": "main",
     "sha": "e4e7fa03eb8215e892fee1d20446ca18089563e7",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "cluster-api-provider-tinkerbell jsonnet library"
   },
   {
     "name": "composable-libsonnet",
@@ -217,7 +238,8 @@
     "branch": "main",
     "sha": "5d395b1019d185ced434dfbb3755a67ed9021c96",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "composable jsonnet library"
   },
   {
     "name": "consul-libsonnet",
@@ -227,7 +249,8 @@
     "branch": "main",
     "sha": "ddb449f8184b6220123e5fc0ba1f58c51dc1900f",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "consul jsonnet library"
   },
   {
     "name": "contour-libsonnet",
@@ -237,7 +260,8 @@
     "branch": "main",
     "sha": "76f47a81d051becac2c8a5bc71403ab9fe28e660",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "contour jsonnet library"
   },
   {
     "name": "crossplane-core-libsonnet",
@@ -247,7 +271,8 @@
     "branch": "main",
     "sha": "ddcd6cf9adf26ee273e1ace6673287f538c6b0bd",
     "kind": "single",
-    "closure": []
+    "closure": [],
+    "description": "crossplane-core jsonnet library"
   },
   {
     "name": "crossplane-provider-upjet-azuread-libsonnet",
@@ -257,7 +282,8 @@
     "branch": "main",
     "sha": "1914274f3ca915577f120c3c20b973bb77a783b0",
     "kind": "single",
-    "closure": []
+    "closure": [],
+    "description": "crossplane-provider-upjet-azuread jsonnet library"
   },
   {
     "name": "crossplane-provider-upjet-github-libsonnet",
@@ -267,7 +293,8 @@
     "branch": "main",
     "sha": "48ce32681d8c0f9ce08d1c265cb6a43c749b8078",
     "kind": "single",
-    "closure": []
+    "closure": [],
+    "description": "crossplane-provider-upjet-github jsonnet library"
   },
   {
     "name": "dapr-libsonnet",
@@ -277,7 +304,8 @@
     "branch": "main",
     "sha": "0331b9934c53531564ef8873a459188fcf8d4e93",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "dapr jsonnet library"
   },
   {
     "name": "datadog-operator-libsonnet",
@@ -287,7 +315,8 @@
     "branch": "main",
     "sha": "98e4dd1abe7e9dfb1b41295a79a16316a64fc13e",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "datadog-operator jsonnet library"
   },
   {
     "name": "docsonnet",
@@ -297,7 +326,8 @@
     "branch": "master",
     "sha": "bf6f08ae02a51c48bdcec4629b1c1a5a62c6f803",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "Experimental Jsonnet docs generator"
   },
   {
     "name": "eck-operator-libsonnet",
@@ -307,7 +337,8 @@
     "branch": "main",
     "sha": "ee9f4584b0384b1c80381595a5cbde06251d6982",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "eck-operator jsonnet library"
   },
   {
     "name": "edp-keycloak-operator-libsonnet",
@@ -317,7 +348,8 @@
     "branch": "main",
     "sha": "77dcc1a20cfe688d604d1c68bc839b551fbabd90",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "edp-keycloak-operator jsonnet library"
   },
   {
     "name": "emissary-libsonnet",
@@ -327,7 +359,8 @@
     "branch": "main",
     "sha": "6261cca3e88e99b4a9ab5a5eb6135377af21ab2a",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "emissary jsonnet library"
   },
   {
     "name": "envoy-gateway-libsonnet",
@@ -337,7 +370,8 @@
     "branch": "main",
     "sha": "41e88ead9ed5418f59f3823d5b424932b0668d18",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "envoy-gateway jsonnet library"
   },
   {
     "name": "etcd-operator-libsonnet",
@@ -347,7 +381,8 @@
     "branch": "main",
     "sha": "9859e86916213dcc4dff4e3267662dee4ae28e5d",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "etcd-operator jsonnet library"
   },
   {
     "name": "external-dns-libsonnet",
@@ -357,7 +392,8 @@
     "branch": "main",
     "sha": "6f72d009f4d977e6eeb4bf19f39ecad61eebfc55",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "external-dns jsonnet library"
   },
   {
     "name": "external-secrets-libsonnet",
@@ -367,7 +403,8 @@
     "branch": "main",
     "sha": "ddce992764944c4e8e93de79a593a4c8a9768ed2",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "external-secrets jsonnet library"
   },
   {
     "name": "flagger-libsonnet",
@@ -377,7 +414,8 @@
     "branch": "main",
     "sha": "b6455187825896cd6dfd7d918b5f612f1d47dd4f",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "flagger jsonnet library"
   },
   {
     "name": "fluxcd-libsonnet",
@@ -387,7 +425,8 @@
     "branch": "main",
     "sha": "62f6736add6b70b45e3e3f78feceea41bcb6022d",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "fluxcd jsonnet library"
   },
   {
     "name": "gatekeeper-libsonnet",
@@ -397,7 +436,8 @@
     "branch": "main",
     "sha": "a77bc1490e06413b2d6ec6926f1e6d19eb0233d5",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "gatekeeper jsonnet library"
   },
   {
     "name": "gateway-api-libsonnet",
@@ -407,7 +447,8 @@
     "branch": "main",
     "sha": "3fa622d87a7ec729c063e6d83a3911c726c83414",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "gateway-api jsonnet library"
   },
   {
     "name": "google-cloud-sql-proxy-operator-libsonnet",
@@ -417,7 +458,8 @@
     "branch": "main",
     "sha": "158b0304b5a22ffc4750b040e7fc3492f2f58bb5",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "google-cloud-sql-proxy-operator jsonnet library"
   },
   {
     "name": "grafana-agent-libsonnet",
@@ -427,7 +469,8 @@
     "branch": "main",
     "sha": "ef492dcc8b105df3aec88585919115630ba4c40b",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "grafana-agent jsonnet library"
   },
   {
     "name": "grafana-alloy-libsonnet",
@@ -437,7 +480,8 @@
     "branch": "main",
     "sha": "684a88dbb4ee37242073373fa338b6f51e2d70b3",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "grafana-alloy jsonnet library"
   },
   {
     "name": "grafana-operator-libsonnet",
@@ -447,7 +491,8 @@
     "branch": "main",
     "sha": "bfd442e472f449c3fa53d42e42081e8121d875af",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "grafana-operator jsonnet library"
   },
   {
     "name": "grafonnet",
@@ -461,7 +506,8 @@
       "docsonnet",
       "testonnet",
       "xtd"
-    ]
+    ],
+    "description": "Jsonnet library for generating Grafana dashboards."
   },
   {
     "name": "harbor-operator-libsonnet",
@@ -471,7 +517,8 @@
     "branch": "main",
     "sha": "44f94ef0b5b1e3af8af6603d74eaf3cd6e84b1c3",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "harbor-operator jsonnet library"
   },
   {
     "name": "hcp-terraform-operator-libsonnet",
@@ -481,7 +528,8 @@
     "branch": "main",
     "sha": "36205728945a2b6d8684a600654e3aa2eebc9b28",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "hcp-terraform-operator jsonnet library"
   },
   {
     "name": "istio-libsonnet",
@@ -491,7 +539,8 @@
     "branch": "main",
     "sha": "e6ac81a76d3c48162b0db81b3fe65a616b6c7c0c",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "istio jsonnet library"
   },
   {
     "name": "kargo-libsonnet",
@@ -501,7 +550,8 @@
     "branch": "main",
     "sha": "92ec881987d9d8766239e6e8f93630e208061427",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "kargo jsonnet library"
   },
   {
     "name": "karpenter-libsonnet",
@@ -511,7 +561,8 @@
     "branch": "main",
     "sha": "d1d78aefa094c43c9dd7b2432b8b9904dfe07a1f",
     "kind": "single",
-    "closure": []
+    "closure": [],
+    "description": "karpenter jsonnet library"
   },
   {
     "name": "keda-libsonnet",
@@ -521,7 +572,8 @@
     "branch": "main",
     "sha": "dbc8cf1a9847f123d8325378111155fb135983ab",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "keda jsonnet library"
   },
   {
     "name": "knative-eventing-libsonnet",
@@ -531,7 +583,8 @@
     "branch": "main",
     "sha": "4c0886699509aa87ce6cdbd11f2079ae62bece97",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "knative-eventing jsonnet library"
   },
   {
     "name": "knative-serving-libsonnet",
@@ -541,7 +594,8 @@
     "branch": "main",
     "sha": "ca534f645553aa732b392a411c24aea6bde63241",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "knative-serving jsonnet library"
   },
   {
     "name": "kro-libsonnet",
@@ -551,7 +605,8 @@
     "branch": "main",
     "sha": "a2ab74756ef67524eedfd17fa4b6ea4976b1e15c",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "kro jsonnet library"
   },
   {
     "name": "kube-prometheus-libsonnet",
@@ -561,7 +616,8 @@
     "branch": "main",
     "sha": "07db54610287559cb491757d8185acdcbb93e01e",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "kube-prometheus jsonnet library"
   },
   {
     "name": "kubernetes-nmstate-libsonnet",
@@ -571,7 +627,8 @@
     "branch": "main",
     "sha": "9a3caa8d6aecebf9ee0b4f68da9dbf9ffd35f52b",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "kubernetes-nmstate jsonnet library"
   },
   {
     "name": "kubernetes-secret-generator-libsonnet",
@@ -581,7 +638,8 @@
     "branch": "main",
     "sha": "71904f9946f28aab7c21d46f40c92761ad09c55b",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "kubernetes-secret-generator jsonnet library"
   },
   {
     "name": "kubevela-libsonnet",
@@ -591,7 +649,8 @@
     "branch": "main",
     "sha": "eff801dd29897cf5f143fd98aa9f7d86363ba425",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "kubevela jsonnet library"
   },
   {
     "name": "kueue-libsonnet",
@@ -601,7 +660,8 @@
     "branch": "main",
     "sha": "a2fa0296e169a596e9d83929909978d0e3d26573",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "kueue jsonnet library"
   },
   {
     "name": "kyverno-libsonnet",
@@ -611,7 +671,8 @@
     "branch": "main",
     "sha": "901e8ef1f22469dbe506f68c8a5a105766793dfb",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "kyverno jsonnet library"
   },
   {
     "name": "litmus-chaos-libsonnet",
@@ -621,7 +682,8 @@
     "branch": "main",
     "sha": "92c34f731473baa27987f8dac350c4afbeb6f340",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "litmus-chaos jsonnet library"
   },
   {
     "name": "mariadb-operator-libsonnet",
@@ -631,7 +693,8 @@
     "branch": "main",
     "sha": "d39c788212d41e17fd8c4d247a64420e9bca7e78",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "mariadb-operator jsonnet library"
   },
   {
     "name": "metacontroller-libsonnet",
@@ -641,7 +704,8 @@
     "branch": "main",
     "sha": "465f5d8b8bc6ed30ffcb2d8faa01b1c67dfe827e",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "metacontroller jsonnet library"
   },
   {
     "name": "metallb-libsonnet",
@@ -651,7 +715,8 @@
     "branch": "main",
     "sha": "b5f17d3c5a32918dc0f6f92e713580a506eb585f",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "metallb jsonnet library"
   },
   {
     "name": "milvus-operator-libsonnet",
@@ -661,7 +726,8 @@
     "branch": "main",
     "sha": "fdc14cb91b3a26326772c23101a759f3f44a003c",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "milvus-operator jsonnet library"
   },
   {
     "name": "minio-operator-libsonnet",
@@ -671,7 +737,8 @@
     "branch": "main",
     "sha": "28fbde5cd3cc706a972c232658aed113ddbe2247",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "minio-operator jsonnet library"
   },
   {
     "name": "mysql-operator-libsonnet",
@@ -681,7 +748,8 @@
     "branch": "main",
     "sha": "26fd51aa9d8449284250c8824425e5d75e15e80f",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "mysql-operator jsonnet library"
   },
   {
     "name": "nats-libsonnet",
@@ -691,7 +759,8 @@
     "branch": "main",
     "sha": "48a9603ece6f6882105e1d0e1f3ebd4a69c65ff1",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "nats jsonnet library"
   },
   {
     "name": "node-feature-discovery-libsonnet",
@@ -701,7 +770,8 @@
     "branch": "main",
     "sha": "fc0e3deab66d42bc1f62f757617a568ac3d3e9ef",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "node-feature-discovery jsonnet library"
   },
   {
     "name": "prometheus-operator-libsonnet",
@@ -711,7 +781,8 @@
     "branch": "main",
     "sha": "91d2d9355cbef02035d84e54ac6bebcf9d29afa7",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "prometheus-operator jsonnet library"
   },
   {
     "name": "pyrra-libsonnet",
@@ -721,7 +792,8 @@
     "branch": "main",
     "sha": "5b2d46ccff2dafee3e362d79d858812b640b1682",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "pyrra jsonnet library"
   },
   {
     "name": "rabbitmq-libsonnet",
@@ -731,7 +803,8 @@
     "branch": "main",
     "sha": "8502687b654b8c4daa5726cb15a7716f3b19bb2e",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "rabbitmq jsonnet library"
   },
   {
     "name": "rabbitmq-messaging-topology-operator-libsonnet",
@@ -741,7 +814,8 @@
     "branch": "main",
     "sha": "cd55df7988ee76271b6a1af56dd120b1cef9e920",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "rabbitmq-messaging-topology-operator jsonnet library"
   },
   {
     "name": "secrets-store-csi-driver-libsonnet",
@@ -751,7 +825,8 @@
     "branch": "main",
     "sha": "c58d123e65ad4d04a6d473afde812a1e6ad358ec",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "secrets-store-csi-driver jsonnet library"
   },
   {
     "name": "securecodebox-libsonnet",
@@ -761,7 +836,8 @@
     "branch": "main",
     "sha": "a2d53ff787c929a56e10e09a75efc4d6f536a1e1",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "securecodebox jsonnet library"
   },
   {
     "name": "spicedb-operator-libsonnet",
@@ -771,7 +847,8 @@
     "branch": "main",
     "sha": "9e76f76f9f28b2515ee12cf87d919c5f50b21a1d",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "spicedb-operator jsonnet library"
   },
   {
     "name": "strimzi-libsonnet",
@@ -781,7 +858,8 @@
     "branch": "main",
     "sha": "c93ae6cc07e6c4fbc3a1b3fd050e67db098c4cfc",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "strimzi jsonnet library"
   },
   {
     "name": "tailscale-operator-libsonnet",
@@ -791,7 +869,8 @@
     "branch": "main",
     "sha": "43d309c13f380b5c3bf7c43b812cb10471e66f4d",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "tailscale-operator jsonnet library"
   },
   {
     "name": "tektoncd-libsonnet",
@@ -801,7 +880,8 @@
     "branch": "main",
     "sha": "3ce83b72c3b4c5aa5e5c402ca5db90eaf8fb4344",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "tektoncd jsonnet library"
   },
   {
     "name": "teleport-operator-libsonnet",
@@ -811,7 +891,8 @@
     "branch": "main",
     "sha": "59418e8993100cd711dbb092db124931b6328639",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "teleport-operator jsonnet library"
   },
   {
     "name": "testonnet",
@@ -824,7 +905,8 @@
     "closure": [
       "docsonnet",
       "xtd"
-    ]
+    ],
+    "description": "A unit testing framework for Jsonnet."
   },
   {
     "name": "tinkerbell-libsonnet",
@@ -834,7 +916,8 @@
     "branch": "main",
     "sha": "601bdba18bac734ba03ed6a2f71268cd5d5d53ed",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "tinkerbell jsonnet library"
   },
   {
     "name": "traefik-libsonnet",
@@ -844,7 +927,8 @@
     "branch": "main",
     "sha": "7a32abefebcef2df5ac61704a7856266cf879011",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "traefik jsonnet library"
   },
   {
     "name": "triggermesh-libsonnet",
@@ -854,7 +938,8 @@
     "branch": "main",
     "sha": "476e2ce408ac73ef1baee6e5d78cc89fd8974bb6",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "triggermesh jsonnet library"
   },
   {
     "name": "trust-manager-libsonnet",
@@ -864,7 +949,8 @@
     "branch": "main",
     "sha": "aca08b6c64756f604bf043e96f98eee52dfddc6b",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "trust-manager jsonnet library"
   },
   {
     "name": "upbound-provider-opentofu-libsonnet",
@@ -874,7 +960,8 @@
     "branch": "main",
     "sha": "d9789624643158a195aaad41472ccdda42fc87bf",
     "kind": "single",
-    "closure": []
+    "closure": [],
+    "description": "upbound-provider-opentofu jsonnet library"
   },
   {
     "name": "vault-secrets-operator-libsonnet",
@@ -884,7 +971,8 @@
     "branch": "main",
     "sha": "cacb67aaf997793c446804add35e6be2b66e4449",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "vault-secrets-operator jsonnet library"
   },
   {
     "name": "vertical-pod-autoscaler-libsonnet",
@@ -894,7 +982,8 @@
     "branch": "main",
     "sha": "c134bafc39a51bc92e4099b1b17e5d11eca7121b",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "vertical-pod-autoscaler jsonnet library"
   },
   {
     "name": "victoria-metrics-operator-libsonnet",
@@ -904,7 +993,8 @@
     "branch": "main",
     "sha": "3a75e2820f26db809f02d7d16261d5984d4bb9b4",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "victoria-metrics-operator jsonnet library"
   },
   {
     "name": "xtd",
@@ -917,7 +1007,8 @@
     "closure": [
       "docsonnet",
       "testonnet"
-    ]
+    ],
+    "description": "Extended Jsonnet standard library"
   },
   {
     "name": "zalando-postgres-operator-libsonnet",
@@ -927,6 +1018,7 @@
     "branch": "main",
     "sha": "fb2a7c5008a8ad0f1f33b96e568601faef52a323",
     "kind": "multi",
-    "closure": []
+    "closure": [],
+    "description": "zalando-postgres-operator jsonnet library"
   }
 ]
