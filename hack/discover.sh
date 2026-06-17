@@ -37,13 +37,25 @@ gdesc="$(api repos/grafana/grafonnet | jq -r '.description // ""')"
 descmap="$(echo "$descmap" | jq --arg d "$gdesc" '. + {grafonnet:$d}')"
 
 classify() { # paths  ->  kind|skip
-  local paths="$1"
-  if echo "$paths" | grep -qE '^[^/]+/main\.libsonnet$' \
-     && echo "$paths" | grep -E '^[^/]+/main\.libsonnet$' | grep -qvE '^(_|\.|docs/)'; then
-    echo "$paths" | grep -qx 'main.libsonnet' || { echo multi; return; }
+  local paths="$1" toplevel
+  # Match against here-strings, never `echo "$paths" | grep -q`: under
+  # `set -o pipefail` a `grep -q` that early-exits on its first match closes the
+  # pipe while echo is still writing, so echo dies with SIGPIPE and the whole
+  # pipeline reports failure even though grep DID match. For a large repo
+  # (k8s-libsonnet ships thousands of paths) that misreads the match as "no
+  # match", so the library is wrongly classified `skip` and never built. A
+  # here-string has no upstream writer process to receive SIGPIPE.
+  #
+  # Top-level version dirs each holding main.libsonnet (X/main.libsonnet),
+  # excluding _private/.dot/docs prefixes -> multi-version. Capture the matches
+  # first (read fully, no early exit) so the prefix check runs on that small set
+  # without another large pipe.
+  toplevel="$(grep -E '^[^/]+/main\.libsonnet$' <<<"$paths" || true)"
+  if [ -n "$toplevel" ] && grep -qvE '^(_|\.|docs/)' <<<"$toplevel"; then
+    grep -qx 'main.libsonnet' <<<"$paths" || { echo multi; return; }
   fi
-  echo "$paths" | grep -qx 'main.libsonnet' && { echo single; return; }
-  echo "$paths" | grep -q '\.libsonnet$' && { echo single; return; }
+  grep -qx 'main.libsonnet' <<<"$paths" && { echo single; return; }
+  grep -q '\.libsonnet$' <<<"$paths" && { echo single; return; }
   echo skip
 }
 
