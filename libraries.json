@@ -55,6 +55,17 @@
     "description": "argo-rollouts jsonnet library"
   },
   {
+    "name": "argo-workflows-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "argo-workflows-libsonnet",
+    "source": "https://github.com/jsonnet-libs/argo-workflows-libsonnet",
+    "branch": "main",
+    "sha": "fe2760d8d282e7c07d48e086c5fb198e0e8bc41e",
+    "kind": "multi",
+    "closure": [],
+    "description": "argo-workflows jsonnet library"
+  },
+  {
     "name": "argocd-operator-libsonnet",
     "org": "jsonnet-libs",
     "repo": "argocd-operator-libsonnet",
@@ -231,6 +242,17 @@
     "description": "cluster-api-provider-tinkerbell jsonnet library"
   },
   {
+    "name": "cnrm-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "cnrm-libsonnet",
+    "source": "https://github.com/jsonnet-libs/cnrm-libsonnet",
+    "branch": "main",
+    "sha": "953f6b1700d783702102c4468b0f8a2fc6e8f4a4",
+    "kind": "multi",
+    "closure": [],
+    "description": "cnrm jsonnet library"
+  },
+  {
     "name": "composable-libsonnet",
     "org": "jsonnet-libs",
     "repo": "composable-libsonnet",
@@ -275,6 +297,50 @@
     "description": "crossplane-core jsonnet library"
   },
   {
+    "name": "crossplane-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "crossplane-libsonnet",
+    "source": "https://github.com/jsonnet-libs/crossplane-libsonnet",
+    "branch": "main",
+    "sha": "d2bc8467d459d5c9798b24b98230a59e7e25d1d8",
+    "kind": "single",
+    "closure": [],
+    "description": "crossplane jsonnet library"
+  },
+  {
+    "name": "crossplane-provider-grafana-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "crossplane-provider-grafana-libsonnet",
+    "source": "https://github.com/jsonnet-libs/crossplane-provider-grafana-libsonnet",
+    "branch": "main",
+    "sha": "bc623e2fb151df6189723fe947dccb7d80d40791",
+    "kind": "single",
+    "closure": [],
+    "description": "crossplane-provider-grafana jsonnet library"
+  },
+  {
+    "name": "crossplane-provider-upjet-aws-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "crossplane-provider-upjet-aws-libsonnet",
+    "source": "https://github.com/jsonnet-libs/crossplane-provider-upjet-aws-libsonnet",
+    "branch": "main",
+    "sha": "b15f6799c39b097eee2a0d274907ce3557dd03f7",
+    "kind": "single",
+    "closure": [],
+    "description": "crossplane-provider-upjet-aws jsonnet library"
+  },
+  {
+    "name": "crossplane-provider-upjet-azure-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "crossplane-provider-upjet-azure-libsonnet",
+    "source": "https://github.com/jsonnet-libs/crossplane-provider-upjet-azure-libsonnet",
+    "branch": "main",
+    "sha": "8a871d662b05b5d38b66e597d7de60571db04ce0",
+    "kind": "single",
+    "closure": [],
+    "description": "crossplane-provider-upjet-azure jsonnet library"
+  },
+  {
     "name": "crossplane-provider-upjet-azuread-libsonnet",
     "org": "jsonnet-libs",
     "repo": "crossplane-provider-upjet-azuread-libsonnet",
@@ -284,6 +350,17 @@
     "kind": "single",
     "closure": [],
     "description": "crossplane-provider-upjet-azuread jsonnet library"
+  },
+  {
+    "name": "crossplane-provider-upjet-gcp-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "crossplane-provider-upjet-gcp-libsonnet",
+    "source": "https://github.com/jsonnet-libs/crossplane-provider-upjet-gcp-libsonnet",
+    "branch": "main",
+    "sha": "afc82ed3adcddea19cf55f8b76057fad7b6670dc",
+    "kind": "single",
+    "closure": [],
+    "description": "crossplane-provider-upjet-gcp jsonnet library"
   },
   {
     "name": "crossplane-provider-upjet-github-libsonnet",
@@ -543,6 +620,17 @@
     "description": "istio jsonnet library"
   },
   {
+    "name": "k8s-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "k8s-libsonnet",
+    "source": "https://github.com/jsonnet-libs/k8s-libsonnet",
+    "branch": "main",
+    "sha": "ee5c4c5ee02571eaf82f1170c60af47eee5496be",
+    "kind": "multi",
+    "closure": [],
+    "description": "k8s jsonnet library"
+  },
+  {
     "name": "kargo-libsonnet",
     "org": "jsonnet-libs",
     "repo": "kargo-libsonnet",
@@ -772,6 +860,17 @@
     "kind": "multi",
     "closure": [],
     "description": "node-feature-discovery jsonnet library"
+  },
+  {
+    "name": "openshift-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "openshift-libsonnet",
+    "source": "https://github.com/jsonnet-libs/openshift-libsonnet",
+    "branch": "main",
+    "sha": "de3bd261c1e805596e8cabf15cee6297b6ff509d",
+    "kind": "multi",
+    "closure": [],
+    "description": "openshift jsonnet library"
   },
   {
     "name": "prometheus-operator-libsonnet",
