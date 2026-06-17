@@ -27,6 +27,54 @@ local k = import 'github.com/jsonnet-libs/k8s-libsonnet/1.34/main.libsonnet';
 local g = import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet';
 ```
 
+## Consuming a library
+
+The image reference and the Jsonnet import path are **two different strings** —
+get both right:
+
+| | Pattern | grafonnet example |
+|---|---|---|
+| **Image** | `ghcr.io/metio/joi-<org>-<repo>` | `ghcr.io/metio/joi-grafana-grafonnet` |
+| **Import** | `github.com/<org>/<repo>/…` | `github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet` |
+
+The easiest way to consume these in-cluster is the
+[`joi` Helm chart](https://github.com/metio/helm-charts/tree/main/charts/joi),
+which renders the pair below for every enabled library. To wire one by hand in
+**operator mode** — an `OCIRepository` plus a `JsonnetLibrary` that a snippet
+references in `spec.libraries`:
+
+```yaml
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: grafonnet
+spec:
+  interval: 1h
+  url: oci://ghcr.io/metio/joi-grafana-grafonnet
+  ref:
+    tag: latest
+---
+apiVersion: jaas.metio.wtf/v1
+kind: JsonnetLibrary
+metadata:
+  name: grafonnet
+spec:
+  sourceRef:
+    kind: OCIRepository
+    name: grafonnet
+# no path: the whole single-layer vendor tree is the library root
+```
+
+For the **standalone HTTP renderer**, mount the same image as a library volume
+via the jaas chart's `additionalLibraries` map instead:
+
+```yaml
+additionalLibraries:
+  grafonnet: ghcr.io/metio/joi-grafana-grafonnet:latest
+```
+
+Either way the snippet imports by the full vendor path shown in the table above.
+
 ## Image tags — `latest` vs a pinned snapshot
 
 There are two independent axes. The **library version** is chosen in the import
