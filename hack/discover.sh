@@ -71,7 +71,23 @@ add() { # name org repo branch kind paths
 
 while IFS=$'\t' read -r name branch; do
   case " $SKIP " in *" $name "*) continue;; esac
-  tree="$(api "repos/jsonnet-libs/${name}/git/trees/${branch}?recursive=1")" || continue
+  # A swallowed tree fetch drops the library from this run's fresh discovery.
+  # The superset merge below only preserves libraries already in the manifest, so
+  # a library that has never once been discovered (the fetch failed on its very
+  # first run) is invisible forever — log loudly so a persistent miss is greppable
+  # rather than silent.
+  tree="$(api "repos/jsonnet-libs/${name}/git/trees/${branch}?recursive=1")" \
+    || { echo "DROP (tree fetch failed after retries): $name" >&2; continue; }
+  # GitHub caps a recursive tree at ~100k entries / 7 MB and sets truncated=true.
+  # A version-dir main.libsonnet sorts after that library's whole _gen/** subtree,
+  # so truncation hides exactly the path classify() keys on and would misclassify a
+  # large multi-version library as single — or drop it. The org's biggest libraries
+  # (e.g. k8s-libsonnet) are the ones at risk, so refuse a partial tree and let the
+  # superset merge keep the last good entry instead of replacing it with a wrong one.
+  if [ "$(echo "$tree" | jq -r '.truncated' 2>/dev/null || echo false)" = true ]; then
+    echo "DROP (truncated tree, cannot classify reliably): $name" >&2
+    continue
+  fi
   paths="$(echo "$tree" | jq -r '.tree[]?.path' 2>/dev/null)"
   kind="$(classify "$paths")"
   [ "$kind" = skip ] && { echo "skip (no jsonnet): $name" >&2; continue; }
