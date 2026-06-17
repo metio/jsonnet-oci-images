@@ -49,12 +49,18 @@ jobs:
               '(reduce ($old[0][]?) as $e ({}; .[$e.name]=$e.sha)) as $o
                | [ .[] | select(.sha != ($o[.name] // "")) ]' new.json > changed.json
           fi
+          # Diagnostics: what the manifest holds now vs what changed/is new.
+          echo "manifest holds $(jq length new.json) libraries; $(jq length changed.json) changed or new this run"
+          echo "changed/new libraries:"; jq -r '.[].name' changed.json | sed 's/^/  - /'
           if ! diff -q libraries.json new.json >/dev/null 2>&1; then
             mv new.json libraries.json
             hack/gen-readme.sh libraries.json > LIBRARIES.md
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add libraries.json LIBRARIES.md && git commit -m 'chore: refresh JOI library manifest' && git push
+            echo "manifest refreshed and committed"
+          else
+            echo "manifest unchanged — no commit"
           fi
       - id: set
         name: Emit build matrix (changed libraries only)

@@ -15,15 +15,26 @@
 # chart can auto-enable a library's dependencies.
 set -euo pipefail
 
-# --retry-all-errors so a transient 5xx / 429 / connection blip is retried
-# rather than swallowed. Without it a single failed fetch drops a library from
-# the regenerated manifest — the per-repo tree fetch below falls through to
-# `|| continue`, silently removing a still-published image from the build set.
+# Retry transient failures — 5xx (including 504 gateway timeouts on the large
+# recursive-tree endpoint), 429 rate limits, and connection blips. --retry-delay 0
+# selects curl's exponential backoff and lets it honor a Retry-After header; the
+# old fixed 2s delay ignored Retry-After and burned the whole budget in seconds.
+# --retry-all-errors also retries non-standard error responses; --retry-max-time
+# bounds the per-call retry window so a sustained outage can't hang the daily run.
 # A genuinely-gone repo (persistent 404) still fails after the retries and is
-# dropped as intended; only flaky failures are absorbed.
-RETRY=(--retry 5 --retry-all-errors --retry-delay 2)
-api() { curl -fsSL "${RETRY[@]}" -H "Authorization: Bearer ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" "https://api.github.com/$1"; }
-raw() { curl -fsSL "${RETRY[@]}" "https://raw.githubusercontent.com/$1"; } # not API-rate-limited
+# dropped as intended. On a final failure the wrappers name the exact URL and
+# curl exit code, so a 504 says which request timed out.
+RETRY=(--retry 6 --retry-all-errors --retry-delay 0 --retry-max-time 120)
+api() {
+  local url="https://api.github.com/$1" rc=0
+  curl -fsSL "${RETRY[@]}" -H "Authorization: Bearer ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" "$url" || rc=$?
+  [ "$rc" -eq 0 ] || { echo "FETCH FAILED (curl $rc): $url" >&2; return "$rc"; }
+}
+raw() { # not API-rate-limited
+  local url="https://raw.githubusercontent.com/$1" rc=0
+  curl -fsSL "${RETRY[@]}" "$url" || rc=$?
+  [ "$rc" -eq 0 ] || { echo "FETCH FAILED (curl $rc): $url" >&2; return "$rc"; }
+}
 
 SKIP="k8s ecosystem playground jsonnet-training-course"
 repos_json="$(for p in 1 2 3 4; do api "orgs/jsonnet-libs/repos?per_page=100&page=$p"; done | jq -s 'add | map(select(.archived==false and .fork==false))')"
@@ -33,7 +44,7 @@ emit=()
 # descriptions never have to flow through the tab-separated read loop below. The
 # final assembly jq merges this onto each freshly-discovered entry by name.
 descmap="$(echo "$repos_json" | jq 'map({key:.name, value:(.description // "")}) | from_entries')"
-gdesc="$(api repos/grafana/grafonnet | jq -r '.description // ""')"
+gdesc="$(api repos/grafana/grafonnet | jq -r '.description // ""')" || gdesc=""
 descmap="$(echo "$descmap" | jq --arg d "$gdesc" '. + {grafonnet:$d}')"
 
 classify() { # paths  ->  kind|skip
@@ -73,6 +84,7 @@ direct_deps() { # org repo sha paths
 }
 
 add() { # name org repo branch kind paths
+  echo "discover + $1 ($5)" >&2
   local sha; sha="$(api "repos/${2}/${3}/commits/${4}" | jq -r '.sha')"
   local deps; deps="$(direct_deps "$2" "$3" "$sha" "$6")"
   emit+=("$(jq -nc --arg name "$1" --arg org "$2" --arg repo "$3" \
@@ -106,10 +118,17 @@ while IFS=$'\t' read -r name branch; do
   add "$name" jsonnet-libs "$name" "$branch" "$kind" "$paths"
 done < <(echo "$repos_json" | jq -r '.[] | "\(.name)\t\(.default_branch)"')
 
-# grafonnet: grafana org, gen/grafonnet-vX layout.
-gbranch="$(api repos/grafana/grafonnet | jq -r '.default_branch')"
-gtree="$(api "repos/grafana/grafonnet/git/trees/${gbranch}?recursive=1" | jq -r '.tree[]?.path')"
-add grafonnet grafana grafonnet "$gbranch" grafonnet-gen "$gtree"
+# grafonnet: grafana org, gen/grafonnet-vX layout. Guarded so a transient fetch
+# failure skips grafonnet for this run — the superset merge below preserves its
+# last manifest entry — instead of aborting the whole refresh.
+if gbranch="$(api repos/grafana/grafonnet | jq -r '.default_branch')" \
+   && gtree="$(api "repos/grafana/grafonnet/git/trees/${gbranch}?recursive=1" | jq -r '.tree[]?.path')"; then
+  add grafonnet grafana grafonnet "$gbranch" grafonnet-gen "$gtree"
+else
+  echo "DROP (grafonnet fetch failed): grafonnet" >&2
+fi
+
+echo "discovered ${#emit[@]} libraries this run (fresh; before superset merge with the committed manifest)" >&2
 
 # Never drop a library. An archived or transiently-unreachable upstream stops
 # producing new SHAs, but its last-built image stays pullable, so the library is
