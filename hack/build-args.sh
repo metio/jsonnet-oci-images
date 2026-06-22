@@ -14,7 +14,6 @@ entry="$(cat "${1:-/dev/stdin}")"
 name="$(jq -r .name <<<"$entry")"
 org="$(jq -r .org <<<"$entry")"
 repo="$(jq -r .repo <<<"$entry")"
-branch="$(jq -r .branch <<<"$entry")"
 sha="$(jq -r .sha <<<"$entry")"
 kind="$(jq -r .kind <<<"$entry")"
 base="github.com/${org}/${repo}"
@@ -26,7 +25,15 @@ versions_under() {
   api "repos/${org}/${repo}/git/trees/${sha}?recursive=1" \
     | jq -r '.tree[]?.path' \
     | sed -n "s#^${prefix}\([^/]*\)/main\.libsonnet\$#\1#p" \
-    | grep -vE '^(_|\.)' | sort -uV
+    | grep -vE '^(_|\.|docs$)' | sort -uV
+}
+
+# Abort if no version subdirs were found — empty would crash "${vers[-1]}" under
+# set -u, or (on a partial tree) silently pick a wrong newest for the latest
+# alias. classify() already refused a truncated tree at discovery time; this is
+# the build-time counterpart.
+require_versions() {
+  [ "$#" -gt 0 ] || { echo "build-args: no version subdirs found for ${name} at ${sha}" >&2; exit 1; }
 }
 
 echo "IMAGE=ghcr.io/metio/joi-${org}-${repo}"
@@ -39,6 +46,7 @@ case "$kind" in
     ;;
   multi)
     mapfile -t vers < <(versions_under "")
+    require_versions "${vers[@]}"
     pkgs=(); for v in "${vers[@]}"; do pkgs+=("${base}/${v}"); done
     newest="${vers[-1]}"
     echo "JB_PKGS=${pkgs[*]}"
@@ -48,6 +56,7 @@ case "$kind" in
     ;;
   grafonnet-gen)
     mapfile -t vers < <(versions_under "gen/")
+    require_versions "${vers[@]}"
     pkgs=(); for v in "${vers[@]}"; do pkgs+=("${base}/gen/${v}"); done
     # newest grafonnet-vX by the numeric suffix
     newest="$(printf '%s\n' "${vers[@]}" | sed 's/^grafonnet-v//' | sort -V | tail -1)"
