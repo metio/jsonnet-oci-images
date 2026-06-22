@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: The jsonnet-oci-images Authors
+# SPDX-License-Identifier: 0BSD
+
+# PR gate so Containerfile-only and workflow-only changes (notably Renovate's
+# base-image and GitHub-Actions bumps) have a green check to auto-merge against.
+# The build pipeline (libraries.yml) only runs on cron/dispatch, so without this
+# a PR carried no status at all. Kept deliberately small: lint the one generic
+# Containerfile (hadolint) and the workflows (actionlint, which also shellchecks
+# the run: blocks). A single all-green aggregate is the only check to mark
+# required in branch protection.
+name: Verify
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  hadolint:
+    name: Containerfile lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - name: hadolint Containerfile
+        # Official hadolint image (Renovate's docker manager pins/bumps it);
+        # reads the Containerfile on stdin, the documented invocation.
+        run: docker run --rm -i docker.io/hadolint/hadolint:latest < Containerfile
+  actionlint:
+    name: Actions lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: reviewdog/action-actionlint@6fb7acc99f4a1008869fa8a0f09cfca740837d9d # v1
+        with:
+          fail_on_error: true
+          filter_mode: nofilter
+  all-green:
+    name: All checks passed
+    needs: [hadolint, actionlint]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify every dependency succeeded
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          set -euo pipefail
+          echo "$RESULTS" | jq -e 'all(.[].result; . == "success" or . == "skipped")' \
+            || { echo "::error::a verify job did not pass"; exit 1; }

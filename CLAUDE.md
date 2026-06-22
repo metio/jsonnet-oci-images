@@ -55,9 +55,21 @@ versions** — do not re-introduce a Renovate manager that pins library tags/SHA
 (The org-preset Renovate managing GitHub Actions / the base image is fine and
 unrelated.)
 
-## CI — one workflow, two jobs
+## CI — the build pipeline plus a small PR gate
 
-`libraries.yml` is the entire pipeline; it both validates and releases. It fires
+`libraries.yml` is the build/release pipeline (below). A second, deliberately
+tiny `verify.yml` runs on `pull_request` only and exists so PRs — notably
+Renovate's base-image and GitHub-Actions bumps, plus any Containerfile change —
+carry a green status that branch protection / auto-merge can require (the build
+pipeline only runs on cron/dispatch, so without this a PR had no check at all).
+It lints the one generic `Containerfile` with **hadolint** (config in
+`.hadolint.yaml`: `failure-threshold: warning`, `DL3007` ignored because the
+`golang:latest` base is Renovate-digest-pinned) and the workflows with
+**actionlint** (which also shellchecks the `run:` blocks), behind a single
+`all-green` aggregate that is the only check to mark required. This keeps
+Containerfile-only and workflow-only PRs auto-mergeable with zero manual work.
+
+`libraries.yml` is the build pipeline; it both validates and releases. It fires
 on a daily `cron` and on `workflow_dispatch` (an `all: true` input forces a
 rebuild of every library instead of only the changed set). Permissions:
 `contents: write` (commit the refreshed manifest), `packages: write` (push to
@@ -76,9 +88,10 @@ ghcr.io), `id-token: write` (cosign keyless).
 
 ## Validation layers
 
-There is **no separate test suite and no separate lint workflow** (no
-yamllint/actionlint/markdownlint/typos/reuse job). The repo is bash + `jq` + a
-generic `Containerfile`; correctness is enforced by the build itself across three
+There is **no separate test suite**, and the only lint is the small PR gate
+above (hadolint + actionlint via `verify.yml`); there is no
+yamllint/markdownlint/typos/reuse job. The repo is bash + `jq` + a
+generic `Containerfile`; correctness is otherwise enforced by the build itself across three
 layers, all inside the `build` job:
 
 1. **The build must succeed.** `jb init` + `jb install` of every `JB_PKGS` target
