@@ -21,9 +21,15 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - name: hadolint Containerfile
-        # Official hadolint image (Renovate's docker manager pins/bumps it);
-        # reads the Containerfile on stdin, the documented invocation.
-        run: docker run --rm -i docker.io/hadolint/hadolint:latest < Containerfile
+        # Official hadolint image (Renovate's docker manager pins/bumps it). Mount
+        # the checkout and run with it as the working dir so hadolint discovers the
+        # repo's .hadolint.yaml — reading the file on stdin would run inside the
+        # container with no access to the config, silently ignoring it.
+        # The image has no entrypoint (its default CMD lints stdin), so invoke
+        # hadolint explicitly with the filename.
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/repo" -w /repo \
+            docker.io/hadolint/hadolint:latest hadolint Containerfile
   actionlint:
     name: Actions lint
     runs-on: ubuntu-latest
