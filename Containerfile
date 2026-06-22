@@ -31,7 +31,7 @@ ARG JB_REF=""
 # build platform ($BUILDPLATFORM). A multi-arch push then runs jb exactly once
 # (no QEMU emulation per target arch); only the empty scratch runtime stage below
 # takes $TARGETPLATFORM, which is what stamps each manifest's architecture.
-FROM --platform=$BUILDPLATFORM cgr.dev/chainguard/go:latest@sha256:cbd282977c3ee0bbd209e6a8795f37b831eef3403ecbc368f9a35a3f23d6370f AS jb
+FROM --platform=$BUILDPLATFORM docker.io/library/golang:latest AS jb
 RUN go install -a github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb@latest
 
 ARG JB_PKGS
@@ -39,10 +39,10 @@ ARG LATEST_DIR
 ARG LATEST_TARGET
 ARG JB_REF
 WORKDIR /src
-RUN /root/go/bin/jb init && \
+RUN /go/bin/jb init && \
     for pkg in ${JB_PKGS}; do \
-      if [ -n "${JB_REF}" ]; then /root/go/bin/jb install "${pkg}@${JB_REF}"; \
-      else /root/go/bin/jb install "${pkg}"; fi; \
+      if [ -n "${JB_REF}" ]; then /go/bin/jb install "${pkg}@${JB_REF}"; \
+      else /go/bin/jb install "${pkg}"; fi; \
     done
 # Synthesize the rolling "latest" alias so consumers can import a pinned version
 # OR "latest" and not care — the same trick grafonnet uses.
