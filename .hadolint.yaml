@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: The jsonnet-oci-images Authors
+# SPDX-License-Identifier: 0BSD
+
+# Warnings and errors fail the lint; info/style are reported but don't block —
+# the generic builder deliberately word-splits ${JB_PKGS} into multiple jb
+# targets (shellcheck SC2086) and keeps the conditional latest-alias step as its
+# own RUN (DL3059), both info-level and intentional.
+failure-threshold: warning
+ignored:
+  # docker.io/library/golang:latest is intentional — Renovate's docker manager
+  # pins the digest, matching the metio base-image convention.
+  - DL3007
