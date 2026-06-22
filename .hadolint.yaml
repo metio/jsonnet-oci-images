@@ -10,3 +10,8 @@ ignored:
   # docker.io/library/golang:latest is intentional — Renovate's docker manager
   # pins the digest, matching the metio base-image convention.
   - DL3007
+  # jb (jsonnet-bundler) is build tooling installed with `go install ...@latest`
+  # on purpose: the builder always uses the newest jb, and a broken jb fails the
+  # build loudly. Pinning it would be one more version to hand-maintain, against
+  # the repo's zero-manual-upkeep model.
+  - DL3062
