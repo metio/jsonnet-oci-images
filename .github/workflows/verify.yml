@@ -6,8 +6,9 @@
 # The build pipeline (libraries.yml) only runs on cron/dispatch, so without this
 # a PR carried no status at all. Kept deliberately small: lint the one generic
 # Containerfile (hadolint) and the workflows (actionlint, which also shellchecks
-# the run: blocks). A single all-green aggregate is the only check to mark
-# required in branch protection.
+# the run: blocks). Both tools come from the flake devShell, pinned by
+# flake.lock, so a local run and CI agree. A single all-green aggregate is the
+# only check to mark required in branch protection.
 name: Verify
 on:
   pull_request:
@@ -18,38 +19,27 @@ jobs:
   hadolint:
     name: Containerfile lint
     runs-on: ubuntu-latest
-    env:
-      # The image runs from a run: block, not a FROM line, so Renovate's docker
-      # manager can't see it. A floating :latest would rot silently here. The
-      # shared metio/renovate-config customManager keys on a `_VERSION` name
-      # with this marker, so a pinned tag lets Renovate bump it on release.
-      # renovate: datasource=docker depName=hadolint/hadolint
-      HADOLINT_VERSION: v2.14.0
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
-      - name: hadolint Containerfile
-        # Mount the checkout and run with it as the working dir so hadolint
-        # discovers the repo's .hadolint.yaml — reading the file on stdin would
-        # run inside the container with no access to the config, silently ignoring
-        # it. The image has no entrypoint (its default CMD lints stdin), so invoke
-        # hadolint explicitly with the filename.
-        run: |
-          docker run --rm -v "$GITHUB_WORKSPACE:/repo" -w /repo \
-            "docker.io/hadolint/hadolint:${HADOLINT_VERSION}" hadolint Containerfile
+      - uses: metio/ci/nix-devshell@50117191bb36382ab22777be480c539fc4c37fed # 2026.7.5211151
+      # hadolint discovers the repo's .hadolint.yaml from the working dir.
+      - run: nix develop --command hadolint Containerfile
   actionlint:
     name: Actions lint
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
-      - uses: reviewdog/action-actionlint@6fb7acc99f4a1008869fa8a0f09cfca740837d9d # v1
-        with:
-          fail_on_error: true
-          filter_mode: nofilter
+      - uses: metio/ci/nix-devshell@50117191bb36382ab22777be480c539fc4c37fed # 2026.7.5211151
+      # shellcheck rides in the devShell, so actionlint lints run: blocks too.
+      - run: nix develop --command actionlint
   all-green:
     name: All checks passed
     needs: [hadolint, actionlint]
     if: always()
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Verify every dependency succeeded
         env:
