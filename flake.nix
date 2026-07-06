@@ -12,9 +12,14 @@
   description = "jsonnet-oci-images development environment";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    # Lets plain `nix-shell` reuse this flake's devShell via shell.nix.
-    flake-compat.url = "github:edolstra/flake-compat";
+    # Follow the metio/ci nixpkgs pin so this repo's actionlint/shellcheck track
+    # the same versions as the rest of the org. This repo's two gates (hadolint +
+    # actionlint) are not the shared lint set, so it keeps its own minimal shell
+    # rather than pulling ci.lib.mkDevShell (which would add the reuse/typos/
+    # yamllint/markdownlint closures it never runs).
+    ci.url = "github:metio/ci";
+    nixpkgs.follows = "ci/nixpkgs";
+    flake-compat.follows = "ci/flake-compat";
   };
 
   outputs =
