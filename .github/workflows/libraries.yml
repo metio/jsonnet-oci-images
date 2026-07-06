@@ -60,16 +60,6 @@ jobs:
           # Diagnostics: what the manifest holds now vs what changed/is new.
           echo "manifest holds $(jq length new.json) libraries; $(jq length changed.json) changed or new this run"
           echo "changed/new libraries:"; jq -r '.[].name' changed.json | sed 's/^/  - /'
-          if ! diff -q libraries.json new.json >/dev/null 2>&1; then
-            mv new.json libraries.json
-            hack/gen-readme.sh libraries.json > LIBRARIES.md
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add libraries.json LIBRARIES.md && git commit -m 'chore: refresh JOI library manifest' && git push
-            echo "manifest refreshed and committed"
-          else
-            echo "manifest unchanged — no commit"
-          fi
       - id: set
         name: Emit build matrix (changed libraries only)
         run: |
@@ -83,10 +73,33 @@ jobs:
             echo "matrix=$(jq -c '{lib: .}' changed.json)"
             echo "date=$(date +'%Y.%-m.%-d')"
           } >> "$GITHUB_OUTPUT"
+      - name: Commit refreshed manifest
+        # Deliberately the LAST step, after the build matrix is emitted: a push
+        # failure (a branch-protection change, a rare non-fast-forward despite
+        # the concurrency guard) fails this job loudly, but `build` gates on
+        # `!cancelled()` rather than discover's success, so the image builds
+        # still run from the already-computed changed set. A manifest that can't
+        # land never silently drops every rebuild.
+        run: |
+          if diff -q libraries.json new.json >/dev/null 2>&1; then
+            echo "manifest unchanged — no commit"
+            exit 0
+          fi
+          mv new.json libraries.json
+          hack/gen-readme.sh libraries.json > LIBRARIES.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add libraries.json LIBRARIES.md
+          git commit -m 'chore: refresh JOI library manifest'
+          git push
+          echo "manifest refreshed and committed"
   build:
     name: ${{ matrix.lib.name }}
     needs: discover
-    if: needs.discover.outputs.any == 'true'
+    # !cancelled() (not success) so a failed manifest commit in discover doesn't
+    # skip the builds — the matrix output is already set by the time that step
+    # runs. any=='true' still gates out empty runs.
+    if: ${{ !cancelled() && needs.discover.outputs.any == 'true' }}
     runs-on: ubuntu-latest
     # This job processes untrusted upstream library metadata, so it gets no
     # contents: write — only what it needs to push images and sign.
