@@ -30,14 +30,23 @@ jobs:
   discover:
     name: Discover libraries
     runs-on: ubuntu-latest
+    # The manifest push authenticates as the write-enabled deploy key (below),
+    # which is on the ruleset bypass list — the default GITHUB_TOKEN /
+    # github-actions[bot] cannot be a bypass actor. So the token itself needs
+    # only read; discover.sh uses it for GitHub API rate limits.
     permissions:
-      contents: write # commit the refreshed manifest
+      contents: read
     outputs:
       matrix: ${{ steps.set.outputs.matrix }}
       any: ${{ steps.set.outputs.any }}
       date: ${{ steps.set.outputs.date }}
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          # SSH deploy key so the manifest push bypasses the branch ruleset.
+          # checkout persists it and points origin at SSH, so the commit step's
+          # `git push` uses it.
+          ssh-key: ${{ secrets.MANIFEST_DEPLOY_KEY }}
       - id: refresh
         name: Refresh manifest + compute changed libraries
         env:
