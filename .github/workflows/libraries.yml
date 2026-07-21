@@ -41,7 +41,7 @@ jobs:
       any: ${{ steps.set.outputs.any }}
       date: ${{ steps.set.outputs.date }}
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           # SSH deploy key so the manifest push bypasses the branch ruleset.
           # checkout persists it and points origin at SSH, so the commit step's
@@ -121,7 +121,7 @@ jobs:
       max-parallel: 12
       matrix: ${{ fromJSON(needs.discover.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - id: args
         name: Compute build args (enumerate versions at the pinned SHA)
         env:
