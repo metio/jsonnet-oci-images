@@ -56,3 +56,9 @@ RUN if [ -n "${LATEST_DIR}" ]; then \
 FROM scratch
 ARG COPY_PATH
 COPY --from=jb /src/vendor/${COPY_PATH} /${COPY_PATH}
+# A scratch image inherits no user, so anything that did exec one of these would
+# run as root — they carry Jsonnet text and no process, but the declaration costs
+# nothing and keeps every image in the fleet answering the question the same way.
+# USER is config metadata rather than a filesystem diff, so the single-layer
+# contract above still holds: a built image reports exactly one RootFS layer.
+USER 65532:65532
