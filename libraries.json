@@ -500,7 +500,7 @@
     "repo": "fluxcd-libsonnet",
     "source": "https://github.com/jsonnet-libs/fluxcd-libsonnet",
     "branch": "main",
-    "sha": "62f6736add6b70b45e3e3f78feceea41bcb6022d",
+    "sha": "8417f464c2d540d9db8404efd0335ea27c404848",
     "kind": "multi",
     "closure": [],
     "description": "fluxcd jsonnet library"
