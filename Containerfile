@@ -31,7 +31,7 @@ ARG JB_REF=""
 # build platform ($BUILDPLATFORM). A multi-arch push then runs jb exactly once
 # (no QEMU emulation per target arch); only the empty scratch runtime stage below
 # takes $TARGETPLATFORM, which is what stamps each manifest's architecture.
-FROM --platform=$BUILDPLATFORM docker.io/library/golang:latest@sha256:4013ae0f9e7994f8535c58c811f8f863fbed38b72e0d51e6592156f758d66146 AS jb
+FROM --platform=$BUILDPLATFORM docker.io/library/golang:latest@sha256:512690a5660563b57d37ecc31129e7f136e831db2aed24a1dbeb8ad7380dc0fa AS jb
 RUN go install -a github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb@latest
 
 ARG JB_PKGS
