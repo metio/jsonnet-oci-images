@@ -148,7 +148,7 @@
     "repo": "cert-manager-libsonnet",
     "source": "https://github.com/jsonnet-libs/cert-manager-libsonnet",
     "branch": "main",
-    "sha": "ae8dca53562a92f87ed183b9d4b02bff69b51c39",
+    "sha": "564e14d00bcbeb3ca797ff158fb96b09def8314d",
     "kind": "multi",
     "closure": [],
     "description": "cert-manager jsonnet library"
@@ -313,7 +313,7 @@
     "repo": "crossplane-provider-grafana-libsonnet",
     "source": "https://github.com/jsonnet-libs/crossplane-provider-grafana-libsonnet",
     "branch": "main",
-    "sha": "bc623e2fb151df6189723fe947dccb7d80d40791",
+    "sha": "c137e84ab21796190d39b4c78be1a34d2d19b5d6",
     "kind": "single",
     "closure": [],
     "description": "crossplane-provider-grafana jsonnet library"
@@ -478,7 +478,7 @@
     "repo": "external-secrets-libsonnet",
     "source": "https://github.com/jsonnet-libs/external-secrets-libsonnet",
     "branch": "main",
-    "sha": "ddce992764944c4e8e93de79a593a4c8a9768ed2",
+    "sha": "446bfb10ac037ee94bdfd8e44c62fa9d736a9d9e",
     "kind": "multi",
     "closure": [],
     "description": "external-secrets jsonnet library"
@@ -625,7 +625,7 @@
     "repo": "k8s-libsonnet",
     "source": "https://github.com/jsonnet-libs/k8s-libsonnet",
     "branch": "main",
-    "sha": "ee5c4c5ee02571eaf82f1170c60af47eee5496be",
+    "sha": "18e7a26f0699cb8b006494f40b93ddd06d33b299",
     "kind": "multi",
     "closure": [],
     "description": "k8s jsonnet library"
@@ -647,7 +647,7 @@
     "repo": "karpenter-libsonnet",
     "source": "https://github.com/jsonnet-libs/karpenter-libsonnet",
     "branch": "main",
-    "sha": "d1d78aefa094c43c9dd7b2432b8b9904dfe07a1f",
+    "sha": "d1e2fe4175561934df91350e14cdc6fe59b53f41",
     "kind": "single",
     "closure": [],
     "description": "karpenter jsonnet library"
@@ -658,7 +658,7 @@
     "repo": "keda-libsonnet",
     "source": "https://github.com/jsonnet-libs/keda-libsonnet",
     "branch": "main",
-    "sha": "dbc8cf1a9847f123d8325378111155fb135983ab",
+    "sha": "dc2d8bbd2472d81138c76b71f34d59fc4cc21df7",
     "kind": "multi",
     "closure": [],
     "description": "keda jsonnet library"
