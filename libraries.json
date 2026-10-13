@@ -702,7 +702,7 @@
     "repo": "kube-prometheus-libsonnet",
     "source": "https://github.com/jsonnet-libs/kube-prometheus-libsonnet",
     "branch": "main",
-    "sha": "07db54610287559cb491757d8185acdcbb93e01e",
+    "sha": "848484030bb45407586fe2f5f21f5d05aa152d88",
     "kind": "multi",
     "closure": [],
     "description": "kube-prometheus jsonnet library"
@@ -878,7 +878,7 @@
     "repo": "prometheus-operator-libsonnet",
     "source": "https://github.com/jsonnet-libs/prometheus-operator-libsonnet",
     "branch": "main",
-    "sha": "91d2d9355cbef02035d84e54ac6bebcf9d29afa7",
+    "sha": "77fa171eeb3922dcb99ee2f9b93681fe33b9089c",
     "kind": "multi",
     "closure": [],
     "description": "prometheus-operator jsonnet library"
