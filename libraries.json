@@ -198,6 +198,28 @@
     "description": "cloudnative-pg jsonnet library"
   },
   {
+    "name": "cluster-api-bootstrap-provider-talos-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "cluster-api-bootstrap-provider-talos-libsonnet",
+    "source": "https://github.com/jsonnet-libs/cluster-api-bootstrap-provider-talos-libsonnet",
+    "branch": "main",
+    "sha": "0d29523fb4f1a97c8fe624cdb8bbf8c83595d89f",
+    "kind": "multi",
+    "closure": [],
+    "description": "cluster-api-bootstrap-provider-talos jsonnet library"
+  },
+  {
+    "name": "cluster-api-control-plane-provider-talos-libsonnet",
+    "org": "jsonnet-libs",
+    "repo": "cluster-api-control-plane-provider-talos-libsonnet",
+    "source": "https://github.com/jsonnet-libs/cluster-api-control-plane-provider-talos-libsonnet",
+    "branch": "main",
+    "sha": "42cb2b4e9281c0bdf2b6540b09a00466da7e40c4",
+    "kind": "multi",
+    "closure": [],
+    "description": "cluster-api-control-plane-provider-talos jsonnet library"
+  },
+  {
     "name": "cluster-api-libsonnet",
     "org": "jsonnet-libs",
     "repo": "cluster-api-libsonnet",
@@ -625,7 +647,7 @@
     "repo": "k8s-libsonnet",
     "source": "https://github.com/jsonnet-libs/k8s-libsonnet",
     "branch": "main",
-    "sha": "18e7a26f0699cb8b006494f40b93ddd06d33b299",
+    "sha": "f66023fcddc92e89c3e81bd49c1f528a984505ef",
     "kind": "multi",
     "closure": [],
     "description": "k8s jsonnet library"

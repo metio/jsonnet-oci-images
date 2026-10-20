@@ -6,7 +6,7 @@ SPDX-License-Identifier: 0BSD
 
 # Published images
 
-101 libraries. Pick the library version in the import path
+103 libraries. Pick the library version in the import path
 (all upstream versions are inside the image; multi-version libraries also carry a
 synthesized `latest` alias). Pin the image with `:latest` (moving) or an immutable
 dated tag `:<YYYY.M.D>` — each rebuild pushes both. See the README for details.
@@ -31,6 +31,8 @@ dated tag `:<YYYY.M.D>` — each rebuild pushes both. See the README for details
 | clickhouse-operator-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-clickhouse-operator-libsonnet` | [jsonnet-libs/clickhouse-operator-libsonnet](https://github.com/jsonnet-libs/clickhouse-operator-libsonnet) | clickhouse-operator jsonnet library |
 | cloudnative-pg-barman-cloud-plugin-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cloudnative-pg-barman-cloud-plugin-libsonnet` | [jsonnet-libs/cloudnative-pg-barman-cloud-plugin-libsonnet](https://github.com/jsonnet-libs/cloudnative-pg-barman-cloud-plugin-libsonnet) | cloudnative-pg-barman-cloud-plugin jsonnet library |
 | cloudnative-pg-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cloudnative-pg-libsonnet` | [jsonnet-libs/cloudnative-pg-libsonnet](https://github.com/jsonnet-libs/cloudnative-pg-libsonnet) | cloudnative-pg jsonnet library |
+| cluster-api-bootstrap-provider-talos-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cluster-api-bootstrap-provider-talos-libsonnet` | [jsonnet-libs/cluster-api-bootstrap-provider-talos-libsonnet](https://github.com/jsonnet-libs/cluster-api-bootstrap-provider-talos-libsonnet) | cluster-api-bootstrap-provider-talos jsonnet library |
+| cluster-api-control-plane-provider-talos-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cluster-api-control-plane-provider-talos-libsonnet` | [jsonnet-libs/cluster-api-control-plane-provider-talos-libsonnet](https://github.com/jsonnet-libs/cluster-api-control-plane-provider-talos-libsonnet) | cluster-api-control-plane-provider-talos jsonnet library |
 | cluster-api-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cluster-api-libsonnet` | [jsonnet-libs/cluster-api-libsonnet](https://github.com/jsonnet-libs/cluster-api-libsonnet) | cluster-api jsonnet library |
 | cluster-api-operator-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cluster-api-operator-libsonnet` | [jsonnet-libs/cluster-api-operator-libsonnet](https://github.com/jsonnet-libs/cluster-api-operator-libsonnet) | cluster-api-operator jsonnet library |
 | cluster-api-provider-aws-libsonnet | `ghcr.io/metio/joi-jsonnet-libs-cluster-api-provider-aws-libsonnet` | [jsonnet-libs/cluster-api-provider-aws-libsonnet](https://github.com/jsonnet-libs/cluster-api-provider-aws-libsonnet) | cluster-api-provider-aws jsonnet library |
