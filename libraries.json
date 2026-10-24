@@ -599,7 +599,7 @@
     "repo": "grafonnet",
     "source": "https://github.com/grafana/grafonnet",
     "branch": "main",
-    "sha": "41e6bfcbe4ef1054298ffff8664f1354c897dd2d",
+    "sha": "8de2f3c83a38f68085c239df979f57d8dfdb7588",
     "kind": "grafonnet-gen",
     "closure": [
       "docsonnet",
