@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: The jsonnet-oci-images Authors
+# SPDX-License-Identifier: 0BSD
+
+cff-version: 1.2.0
+title: jsonnet-oci-images
+message: If you use this software, please cite it as below.
+type: software
+authors:
+- family-names: Hoß
+  given-names: Sebastian
+  email: seb@hoß.de
+url: https://github.com/metio/jsonnet-oci-images/
+license: 0BSD
+keywords:
+  - jsonnet
+  - oci-image
