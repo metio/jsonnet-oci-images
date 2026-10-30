@@ -6,9 +6,9 @@
 # The build pipeline (libraries.yml) only runs on cron/dispatch, so without this
 # a PR carried no status at all. Kept deliberately small: lint the one generic
 # Containerfile (hadolint) and the workflows (actionlint, which also shellchecks
-# the run: blocks). Both tools come from the flake devShell, pinned by
-# flake.lock, so a local run and CI agree. A single all-green aggregate is the
-# only check to mark required in branch protection.
+# the run: blocks). Both tools come from the metio/toolchains groups the
+# .breto.edn names, so a local run and CI agree. A single all-green aggregate
+# is the only check to mark required in branch protection.
 name: Verify
 on:
   pull_request:
@@ -22,18 +22,22 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: metio/nix-devshell@d0c25fdb0d2c08f23bc62c867317a266b6f1a5c1 # 2026.9.12204255
+      - uses: metio/breto@d333d47e385c6178e8f5380a07d65a018fa9d293 # 2026.10.30074227
+        with:
+          registries: github:metio/toolchains
       # hadolint discovers the repo's .hadolint.yaml from the working dir.
-      - run: nix develop --command hadolint Containerfile
+      - run: hadolint Containerfile
   actionlint:
     name: Actions lint
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: metio/nix-devshell@d0c25fdb0d2c08f23bc62c867317a266b6f1a5c1 # 2026.9.12204255
-      # shellcheck rides in the devShell, so actionlint lints run: blocks too.
-      - run: nix develop --command actionlint
+      - uses: metio/breto@d333d47e385c6178e8f5380a07d65a018fa9d293 # 2026.10.30074227
+        with:
+          registries: github:metio/toolchains
+      # shellcheck comes with @lint, so actionlint lints run: blocks too.
+      - run: actionlint
   all-green:
     name: All checks passed
     needs: [hadolint, actionlint]
