@@ -22,25 +22,44 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - uses: metio/breto@d333d47e385c6178e8f5380a07d65a018fa9d293 # 2026.10.30074227
         with:
           registries: github:metio/toolchains
       # hadolint discovers the repo's .hadolint.yaml from the working dir.
       - run: hadolint Containerfile
+  yaml:
+    name: YAML lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: metio/breto@d333d47e385c6178e8f5380a07d65a018fa9d293 # 2026.10.30074227
+        with:
+          registries: github:metio/toolchains
+      - run: yamllint .
   actionlint:
     name: Actions lint
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - uses: metio/breto@d333d47e385c6178e8f5380a07d65a018fa9d293 # 2026.10.30074227
         with:
           registries: github:metio/toolchains
       # shellcheck comes with @lint, so actionlint lints run: blocks too.
       - run: actionlint
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: zizmor --min-severity low --format github .
   all-green:
     name: All checks passed
-    needs: [hadolint, actionlint]
+    needs: [hadolint, yaml, actionlint]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 10
