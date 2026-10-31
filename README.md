@@ -117,3 +117,7 @@ detection makes it unnecessary. (Renovate, via the org-wide
 repo's `renovate.json` extends, still keeps the repo's own infrastructure fresh:
 GitHub Actions and the `Containerfile` builder base. It has no say over the
 library content.)
+
+## License
+
+[0BSD](LICENSES/0BSD.txt).

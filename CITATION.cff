@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: 0BSD
 
 cff-version: 1.2.0
-title: jsonnet-oci-images
+title: Jsonnet OCI Images (JOI)
 message: If you use this software, please cite it as below.
 type: software
 authors:
