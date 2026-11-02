@@ -43,7 +43,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: breto run ci-lint
   all-green:
-    name: All checks passed
+    name: Verify
     needs: [hadolint, lint]
     if: always()
     runs-on: ubuntu-latest
