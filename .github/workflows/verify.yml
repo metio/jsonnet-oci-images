@@ -11,6 +11,7 @@
 # is the only check to mark required in branch protection.
 name: Verify
 on:
+  merge_group:
   pull_request:
     branches: [main]
 permissions:
